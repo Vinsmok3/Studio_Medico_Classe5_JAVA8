@@ -1,0 +1,10 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/studio_medico
+    username: root
+    password: password
+  jpa:
+    database: mysql
+    show_sql: true
+    hibernate:
+      ddl-auto: create
