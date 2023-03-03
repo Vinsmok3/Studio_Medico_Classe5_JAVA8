@@ -2,6 +2,8 @@ package it.studiomedico.entities;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name="Doctor")
 public class Doctor {

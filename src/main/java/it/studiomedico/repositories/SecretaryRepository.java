@@ -1,4 +1,7 @@
 package it.studiomedico.repositories;
 
-public interface SecretaryRepository {
+import it.studiomedico.entities.Secretary;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface SecretaryRepository extends JpaRepository<Secretary,Long> {
 }
