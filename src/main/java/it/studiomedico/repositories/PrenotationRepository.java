@@ -1,4 +1,7 @@
 package it.studiomedico.repositories;
 
-public interface PrenotationRepository {
+import it.studiomedico.entities.Prenotation;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface PrenotationRepository extends JpaRepository <Prenotation, Long> {
 }
