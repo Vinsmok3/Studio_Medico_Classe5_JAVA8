@@ -20,6 +20,7 @@ public class Doctor {
     @Column(name="Workplace", nullable = false)
     private String Workplace;
     @Column(name="Working_Days", nullable = false)
+    @Enumerated(EnumType.STRING)
     private WorkingDaysENUM Working_Days;
     @Column(name="Specialization", nullable = false)
     private String Specialization;
