@@ -15,13 +15,13 @@ public class DoctorController {
     private DoctorRepository doctorRepository;
 
     //Create
-    @PostMapping("")
+    @PostMapping("/create")
     public Doctor create(@RequestBody Doctor doctor){
         return doctorRepository.saveAndFlush(doctor);
     }
 
     // Read All
-    @GetMapping("")
+    @GetMapping("/alldoctor")
     public List<Doctor> getAllDoctors(){
         return doctorRepository.findAll();
     }

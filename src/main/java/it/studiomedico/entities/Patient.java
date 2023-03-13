@@ -6,117 +6,103 @@ import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
-@Table( name = "Patient")
+@Table(name = "Patient")
+public class Patient extends User {
 
-    public class Patient {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long idPatient;
 
-        @Id
-        @GeneratedValue(strategy = GenerationType.AUTO)
-        @Column(name = "idPatient")
-        private long idPatient;
+    @Column(name = "PhoneNumber", nullable = false)
+    private String phonenumber;
 
-        @Column(name="Name", nullable = false)
-        private String Name;
+    @Column(name = "Fiscal_Code", nullable = false)
+    private String fiscalCode;
 
-        @Column(name="Surname", nullable = false)
-        private String Surname;
+    @Column(name = "Gender", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private GenderENUM gender;
 
-        @Column(name="Email", nullable = false, unique = true)
-        private String Email;
+    @ManyToOne
+    @JoinColumn(name = "idDoctor")
+    private Doctor doctor;
+    @OneToMany
+    private List<Prenotation> prenotationList;
 
-        @Column(name="PhoneNumber", nullable = false)
-        private String PhoneNumber;
-
-        @Column(name="Fiscal_Code", nullable = false)
-        private String Fiscal_Code;
-
-        @Column(name="Gender", nullable = false)
-        private GenderENUM Gender;
-
-
-        public long getIdPatient() {
-            return idPatient;
-        }
-
-        public void setIdPatient(long idPatient) {
-            this.idPatient = idPatient;
-        }
-
-        public String getName() {
-            return Name;
-        }
-
-        public void setName(String name) {
-            Name = name;
-        }
-
-        public String getSurname() {
-            return Surname;
-        }
-
-        public void setSurname(String surname) {
-            Surname = surname;
-        }
-
-        public String getEmail() {
-            return Email;
-        }
-
-        public void setEmail(String email) {
-            Email = email;
-        }
-
-        public String getPhoneNumber() {
-            return PhoneNumber;
-        }
-
-        public void setPhoneNumber(String phoneNumber) {
-            PhoneNumber = phoneNumber;
-        }
-
-        public String getFiscal_Code() {
-            return Fiscal_Code;
-        }
-
-        public void setFiscal_Code(String fiscal_Code) {
-            Fiscal_Code = fiscal_Code;
-        }
-
-        public GenderENUM getGender() {
-            return Gender;
-        }
-
-        public void setGender(GenderENUM gender) {
-            Gender = gender;
-        }
-
-
-        public Patient() {
-        }
-
-        public Patient(String name, String surname, String email, String phoneNumber, String fiscal_Code, GenderENUM gender) {
-            Name = name;
-            Surname = surname;
-            Email = email;
-            PhoneNumber = phoneNumber;
-            Fiscal_Code = fiscal_Code;
-            Gender = gender;
-        }
-
-        @ManyToOne
-        @JoinColumn(name = "idDoctor")
-        private Doctor doctor;
-
-        @OneToMany
-        private List<Prenotation> prenotationList;
-
-
-
-
-
-
-
-
+    public Patient(String name, String surname, String email, String phonenumber, String fiscalCode, GenderENUM gender) {
+        super(name, surname, email);
+        this.phonenumber = phonenumber;
+        this.fiscalCode = fiscalCode;
+        this.gender = gender;
     }
+
+    public Patient() {
+        super();
+    }
+
+    @Override
+    public String getName() {
+        return super.getName();
+    }
+
+    @Override
+    public void setName(String name) {
+        super.setName(name);
+    }
+
+    @Override
+    public String getSurname() {
+        return super.getSurname();
+    }
+
+    @Override
+    public void setSurname(String surname) {
+        super.setSurname(surname);
+    }
+
+    @Override
+    public String getEmail() {
+        return super.getEmail();
+    }
+
+    @Override
+    public void setEmail(String email) {
+        super.setEmail(email);
+    }
+
+    public long getIdPatient() {
+        return idPatient;
+    }
+
+    public void setIdPatient(long idPatient) {
+        this.idPatient = idPatient;
+    }
+
+    public String getPhonenumber() {
+        return phonenumber;
+    }
+
+    public void setPhonenumber(String phonenumber) {
+        this.phonenumber = phonenumber;
+    }
+
+    public String getFiscalCode() {
+        return fiscalCode;
+    }
+
+    public void setFiscalCode(String fiscalCode) {
+        this.fiscalCode = fiscalCode;
+    }
+
+    public GenderENUM getGender() {
+        return gender;
+    }
+
+    public void setGender(GenderENUM gender) {
+        this.gender = gender;
+    }
+
+
+}
 
 

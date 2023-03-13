@@ -5,25 +5,19 @@ import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name="Doctor")
-public class Doctor {
+@Table(name = "Doctor")
+public class Doctor extends User {
+
     @Id
-    @Column(name="idDoctor")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long idDoctor;
-    @Column(name="Name", nullable = false)
-    private String Name;
-    @Column(name="Surname", nullable = false)
-    private String Surname;
-    @Column(name="Email", nullable = false, unique = true)
-    private String Email;
-    @Column(name="Workplace", nullable = false)
-    private String Workplace;
-    @Column(name="Working_Days", nullable = false)
+    @Column(nullable = false)
+    private String workplace;
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private WorkingDaysENUM Working_Days;
-    @Column(name="Specialization", nullable = false)
-    private String Specialization;
+    private WorkingDaysENUM working_days;
+    @Column(nullable = false)
+    private String specialization;
 
     @ManyToOne
     @JoinColumn(name = "idSecretary")
@@ -35,16 +29,45 @@ public class Doctor {
     @OneToMany
     private List<Patient> patientList;
 
-    public Doctor() {
+    public Doctor(String name, String surname, String email, String workplace, WorkingDaysENUM working_Days, String specialization) {
+        super(name, surname, email);
+        this.workplace = workplace;
+        this.working_days = working_Days;
+        this.specialization = specialization;
     }
 
-    public Doctor(String name, String surname, String email, String workplace, WorkingDaysENUM working_Days, String specialization) {
-        Name = name;
-        Surname = surname;
-        Email = email;
-        Workplace = workplace;
-        Working_Days = working_Days;
-        Specialization = specialization;
+    public Doctor() {
+        super();
+    }
+
+    @Override
+    public String getName() {
+        return super.getName();
+    }
+
+    @Override
+    public void setName(String name) {
+        super.setName(name);
+    }
+
+    @Override
+    public String getSurname() {
+        return super.getSurname();
+    }
+
+    @Override
+    public void setSurname(String surname) {
+        super.setSurname(surname);
+    }
+
+    @Override
+    public String getEmail() {
+        return super.getEmail();
+    }
+
+    @Override
+    public void setEmail(String email) {
+        super.setEmail(email);
     }
 
     public Long getIdDoctor() {
@@ -55,51 +78,27 @@ public class Doctor {
         this.idDoctor = idDoctor;
     }
 
-    public String getName() {
-        return Name;
-    }
-
-    public void setName(String name) {
-        Name = name;
-    }
-
-    public String getSurname() {
-        return Surname;
-    }
-
-    public void setSurname(String surname) {
-        Surname = surname;
-    }
-
-    public String getEmail() {
-        return Email;
-    }
-
-    public void setEmail(String email) {
-        Email = email;
-    }
-
     public String getWorkplace() {
-        return Workplace;
+        return workplace;
     }
 
     public void setWorkplace(String workplace) {
-        Workplace = workplace;
+        this.workplace = workplace;
     }
 
-    public WorkingDaysENUM getWorking_Days() {
-        return Working_Days;
+    public WorkingDaysENUM getWorking_days() {
+        return working_days;
     }
 
-    public void setWorking_Days(WorkingDaysENUM working_Days) {
-        Working_Days = working_Days;
+    public void setWorking_days(WorkingDaysENUM working_days) {
+        this.working_days = working_days;
     }
 
     public String getSpecialization() {
-        return Specialization;
+        return specialization;
     }
 
     public void setSpecialization(String specialization) {
-        Specialization = specialization;
+        this.specialization = specialization;
     }
 }

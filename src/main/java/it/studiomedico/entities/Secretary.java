@@ -5,29 +5,62 @@ import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
-@Table( name = "Secretary")
-
-public class Secretary {
+@Table(name = "Secretary")
+public class Secretary extends User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "idSecretary")
     private long idSecretary;
 
-    @Column(name="Name", nullable = false)
-    private String Name;
+    @Column(nullable = false)
+    private String workplace;
 
-    @Column(name="Surname", nullable = false)
-    private String Surname;
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private WorkingDaysENUM workingDays;
 
-    @Column(name="Email", nullable = false, unique = true)
-    private String Email;
+    @OneToMany
+    private List<Doctor> doctorList;
 
-    @Column(name="Workplace", nullable = false)
-    private String Workplace;
+    public Secretary(String name, String surname, String email, String workplace, WorkingDaysENUM working_days) {
+        super(name, surname, email);
+        this.workplace = workplace;
+        this.workingDays = working_days;
+    }
 
-    @Column(name="Working_Days", nullable = false)
-    private WorkingDaysENUM Working_Days;
+    public Secretary() {
+        super();
+    }
+
+    @Override
+    public String getName() {
+        return super.getName();
+    }
+
+    @Override
+    public void setName(String name) {
+        super.setName(name);
+    }
+
+    @Override
+    public String getSurname() {
+        return super.getSurname();
+    }
+
+    @Override
+    public void setSurname(String surname) {
+        super.setSurname(surname);
+    }
+
+    @Override
+    public String getEmail() {
+        return super.getEmail();
+    }
+
+    @Override
+    public void setEmail(String email) {
+        super.setEmail(email);
+    }
 
     public long getIdSecretary() {
         return idSecretary;
@@ -37,57 +70,19 @@ public class Secretary {
         this.idSecretary = idSecretary;
     }
 
-    public String getName() {
-        return Name;
-    }
-
-    public void setName(String name) {
-        Name = name;
-    }
-
-    public String getSurname() {
-        return Surname;
-    }
-
-    public void setSurname(String surname) {
-        Surname = surname;
-    }
-
-    public String getEmail() {
-        return Email;
-    }
-
-    public void setEmail(String email) {
-        Email = email;
-    }
-
     public String getWorkplace() {
-        return Workplace;
+        return workplace;
     }
 
     public void setWorkplace(String workplace) {
-        Workplace = workplace;
+        this.workplace = workplace;
     }
 
-    public WorkingDaysENUM getWorking_Days() {
-        return Working_Days;
+    public WorkingDaysENUM getWorkingDays() {
+        return workingDays;
     }
 
-    public void setWorking_Days(WorkingDaysENUM working_Days) {
-        Working_Days = working_Days;
+    public void setWorkingDays(WorkingDaysENUM workingDays) {
+        this.workingDays = workingDays;
     }
-
-    public Secretary(){
-    }
-
-    public Secretary(String name, String surname, String email, String workplace, WorkingDaysENUM working_Days) {
-        Name = name;
-        Surname = surname;
-        Email = email;
-        Workplace = workplace;
-        Working_Days = working_Days;
-    }
-
-    @OneToMany
-    private List<Doctor> doctorList;
 }
