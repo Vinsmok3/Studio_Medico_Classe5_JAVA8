@@ -5,23 +5,24 @@ import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "Doctor")
+@Table(name = "doctor")
 public class Doctor extends User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_doctor")
     private Long idDoctor;
-    @Column(nullable = false)
+    @Column(name = "workplace", nullable = false)
     private String workplace;
-    @Column(nullable = false)
+    @Column(name = "working_days", nullable = false)
     @Enumerated(EnumType.STRING)
-    private WorkingDaysENUM working_days;
-    @Column(nullable = false)
+    private WorkingDaysENUM workingdays;
+    @Column(name = "specialization", nullable = false)
     private String specialization;
 
 
     @ManyToOne
-    @JoinColumn(name = "idSecretary")
+    @JoinColumn(name = "id_secretary")
     private Secretary secretary;
 
     @OneToMany(mappedBy = "doctor")
@@ -31,10 +32,10 @@ public class Doctor extends User {
     private List<Patient> patientList;
 
 
-    public Doctor(String name, String surname, String email, String workplace, WorkingDaysENUM working_Days, String specialization) {
+    public Doctor(String name, String surname, String email, String workplace, WorkingDaysENUM workingdays, String specialization) {
         super(name, surname, email);
         this.workplace = workplace;
-        this.working_days = working_Days;
+        this.workingdays = workingdays;
         this.specialization = specialization;
     }
 
@@ -88,12 +89,12 @@ public class Doctor extends User {
         this.workplace = workplace;
     }
 
-    public WorkingDaysENUM getWorking_days() {
-        return working_days;
+    public WorkingDaysENUM getWorkingdays() {
+        return workingdays;
     }
 
-    public void setWorking_days(WorkingDaysENUM working_days) {
-        this.working_days = working_days;
+    public void setWorkingdays(WorkingDaysENUM workingdays) {
+        this.workingdays = workingdays;
     }
 
     public String getSpecialization() {

@@ -1,24 +1,19 @@
-package it.studiomedico.entities;
+package it.studiomedico.dto;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.MappedSuperclass;
+public class UserDTO {
 
-@MappedSuperclass
-public class User {
-    @Column(name = "name")
     private String name;
-    @Column(name = "surname")
     private String surname;
-
-    @Column(name = "email", unique = true)
     private String email;
 
-    public User(String name, String surname, String email) {
+    public UserDTO(String name, String surname, String email) {
         this.name = name;
         this.surname = surname;
         this.email = email;
     }
-    public User(){}
+
+    public UserDTO() {
+    }
 
     public String getName() {
         return name;

@@ -5,17 +5,18 @@ import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "Secretary")
+@Table(name = "secretary")
 public class Secretary extends User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long idSecretary;
+    @Column(name = "id_secretary")
+    private Long idSecretary;
 
-    @Column(nullable = false)
+    @Column(name = "workplace", nullable = false)
     private String workplace;
 
-    @Column(nullable = false)
+    @Column(name = "working_days", nullable = false)
     @Enumerated(EnumType.STRING)
     private WorkingDaysENUM workingDays;
 
@@ -24,10 +25,10 @@ public class Secretary extends User {
     private List<Doctor> doctorList;
 
 
-    public Secretary(String name, String surname, String email, String workplace, WorkingDaysENUM working_days) {
+    public Secretary(String name, String surname, String email, String workplace, WorkingDaysENUM workingDays) {
         super(name, surname, email);
         this.workplace = workplace;
-        this.workingDays = working_days;
+        this.workingDays = workingDays;
     }
 
     public Secretary() {
@@ -64,11 +65,11 @@ public class Secretary extends User {
         super.setEmail(email);
     }
 
-    public long getIdSecretary() {
+    public Long getIdSecretary() {
         return idSecretary;
     }
 
-    public void setIdSecretary(long idSecretary) {
+    public void setIdSecretary(Long idSecretary) {
         this.idSecretary = idSecretary;
     }
 

@@ -4,12 +4,12 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name="Prenotation")
+@Table(name="prenotation")
 public class Prenotation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "prenotation_id")
-    private long prenotationId;
+    @Column(name = "id_prenotation")
+    private Long idPrenotation;
 
     @Column(name = "prenotation_date", nullable = false)
     private LocalDateTime date;
@@ -19,12 +19,12 @@ public class Prenotation {
 
 
     @ManyToOne
-    @JoinColumn(name = "ext_idPatient", nullable = false)
+    @JoinColumn(name = "ext_id_patient", nullable = false)
     private Patient patient;
 
 
     @ManyToOne
-    @JoinColumn(name = "ext_idDoctor", nullable = false)
+    @JoinColumn(name = "ext_id_doctor", nullable = false)
     private Doctor doctor;
 
     public Prenotation(LocalDateTime date, StatusENUM status, Patient patient, Doctor doctor) {
@@ -36,12 +36,12 @@ public class Prenotation {
 
     public Prenotation(){}
 
-    public long getPrenotationId() {
-        return prenotationId;
+    public Long getIdPrenotation() {
+        return idPrenotation;
     }
 
-    public void setPrenotationId(long prenotationId) {
-        this.prenotationId = prenotationId;
+    public void setIdPrenotation(Long idPrenotation) {
+        this.idPrenotation = idPrenotation;
     }
 
     public LocalDateTime getDate() {

@@ -11,12 +11,13 @@ public class Patient extends User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_patient")
     private Long idPatient;
 
     @Column(name = "phoneNumber", nullable = false)
-    private String phonenumber;
+    private String phoneNumber;
 
-    @Column(name = "fiscal_Code", nullable = false)
+    @Column(name = "fiscal_code", nullable = false)
     private String fiscalCode;
 
     @Column(name = "gender", nullable = false)
@@ -25,15 +26,15 @@ public class Patient extends User {
 
 
     @ManyToOne
-    @JoinColumn(name = "idDoctor")
+    @JoinColumn(name = "id_doctor")
     private Doctor doctor;
     @OneToMany(mappedBy = "patient")
     private List<Prenotation> prenotationList;
 
 
-    public Patient(String name, String surname, String email, String phonenumber, String fiscalCode, GenderENUM gender) {
+    public Patient(String name, String surname, String email, String phoneNumber, String fiscalCode, GenderENUM gender) {
         super(name, surname, email);
-        this.phonenumber = phonenumber;
+        this.phoneNumber = phoneNumber;
         this.fiscalCode = fiscalCode;
         this.gender = gender;
     }
@@ -72,20 +73,20 @@ public class Patient extends User {
         super.setEmail(email);
     }
 
-    public long getIdPatient() {
+    public Long getIdPatient() {
         return idPatient;
     }
 
-    public void setIdPatient(long idPatient) {
+    public void setIdPatient(Long idPatient) {
         this.idPatient = idPatient;
     }
 
-    public String getPhonenumber() {
-        return phonenumber;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setPhonenumber(String phonenumber) {
-        this.phonenumber = phonenumber;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public String getFiscalCode() {
