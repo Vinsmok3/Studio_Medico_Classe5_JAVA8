@@ -9,7 +9,7 @@ import java.util.List;
 public class Doctor extends User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idDoctor;
     @Column(nullable = false)
     private String workplace;
@@ -19,15 +19,17 @@ public class Doctor extends User {
     @Column(nullable = false)
     private String specialization;
 
+
     @ManyToOne
     @JoinColumn(name = "idSecretary")
     private Secretary secretary;
 
-    @OneToMany
+    @OneToMany(mappedBy = "doctor")
     private List<Prenotation> prenotationList;
 
-    @OneToMany
+    @OneToMany(mappedBy = "doctor")
     private List<Patient> patientList;
+
 
     public Doctor(String name, String surname, String email, String workplace, WorkingDaysENUM working_Days, String specialization) {
         super(name, surname, email);

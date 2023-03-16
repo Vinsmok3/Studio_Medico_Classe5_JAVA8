@@ -6,28 +6,30 @@ import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "Patient")
+@Table(name = "patient")
 public class Patient extends User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idPatient;
 
-    @Column(name = "PhoneNumber", nullable = false)
+    @Column(name = "phoneNumber", nullable = false)
     private String phonenumber;
 
-    @Column(name = "Fiscal_Code", nullable = false)
+    @Column(name = "fiscal_Code", nullable = false)
     private String fiscalCode;
 
-    @Column(name = "Gender", nullable = false)
+    @Column(name = "gender", nullable = false)
     @Enumerated(EnumType.STRING)
     private GenderENUM gender;
+
 
     @ManyToOne
     @JoinColumn(name = "idDoctor")
     private Doctor doctor;
-    @OneToMany
+    @OneToMany(mappedBy = "patient")
     private List<Prenotation> prenotationList;
+
 
     public Patient(String name, String surname, String email, String phonenumber, String fiscalCode, GenderENUM gender) {
         super(name, surname, email);

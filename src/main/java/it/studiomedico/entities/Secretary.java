@@ -9,7 +9,7 @@ import java.util.List;
 public class Secretary extends User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idSecretary;
 
     @Column(nullable = false)
@@ -19,8 +19,10 @@ public class Secretary extends User {
     @Enumerated(EnumType.STRING)
     private WorkingDaysENUM workingDays;
 
-    @OneToMany
+
+    @OneToMany(mappedBy = "secretary")
     private List<Doctor> doctorList;
+
 
     public Secretary(String name, String surname, String email, String workplace, WorkingDaysENUM working_days) {
         super(name, surname, email);

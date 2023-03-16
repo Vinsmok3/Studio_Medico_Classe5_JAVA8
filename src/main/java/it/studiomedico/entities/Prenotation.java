@@ -17,9 +17,11 @@ public class Prenotation {
     @Column(name = "status")
     private StatusENUM status;
 
+
     @ManyToOne
     @JoinColumn(name = "ext_idPatient", nullable = false)
     private Patient patient;
+
 
     @ManyToOne
     @JoinColumn(name = "ext_idDoctor", nullable = false)
