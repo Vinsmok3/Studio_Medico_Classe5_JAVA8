@@ -6,7 +6,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "secretary")
-public class Secretary extends User {
+public class Secretary extends User  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,8 +46,8 @@ public class Secretary extends User {
     }
 
     @Override
-    public String getSurname() {
-        return super.getSurname();
+    public String getSurname(String surname) {
+        return super.getSurname(surname);
     }
 
     @Override

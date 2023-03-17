@@ -1,7 +1,8 @@
 package it.studiomedico.controllers;
 
+import it.studiomedico.dto.DoctorDTO;
 import it.studiomedico.entities.Doctor;
-import it.studiomedico.repositories.DoctorRepository;
+import it.studiomedico.service.DoctorService;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -12,32 +13,30 @@ import java.util.List;
 @RequestMapping("/doctor")
 public class DoctorController {
     @Autowired
-    private DoctorRepository doctorRepository;
+    private DoctorService doctorService;
 
     //Create
     @PostMapping("/create")
-    public Doctor create(@RequestBody Doctor doctor){
-        return doctorRepository.saveAndFlush(doctor);
+    public DoctorDTO create(@RequestBody DoctorDTO doctor){
+        return doctorService.postDoctor(doctor);
     }
 
     // Read All
     @GetMapping("/alldoctor")
-    public List<Doctor> getAllDoctors(){
-        return doctorRepository.findAll();
+    public List<DoctorDTO> getAllDoctors(){
+        return doctorService.getAllDoctor();
     }
 
 
     // Read One
     @GetMapping("/{id}")
-    public Doctor getDoctor(@PathVariable long id){
-        return doctorRepository.existsById(id)
-                ? doctorRepository.getById(id)
-                : new Doctor();
+    public DoctorDTO getDoctor(@PathVariable("id") long id){
+        return doctorService.getDoctor(id);
     }
 
     // UpdateWorkplace
-    @PutMapping("/{id}")
-    public Doctor updateDoctorWorkplace(@PathVariable long id, @RequestParam String Workplace){
+   /* @PutMapping("/{id}")
+    public DoctorDTO updateDoctorWorkplace(@PathVariable long id, @RequestParam String Workplace){
         Doctor doctor;
         if (doctorRepository.existsById(id)){
             doctor = doctorRepository.getById(id);
@@ -61,20 +60,17 @@ public class DoctorController {
             doctor = new Doctor();
         }
         return doctor;
-    }
+  }*/
 
     // Delete a specific Doctor
     @DeleteMapping("/{id}")
-    public void deleteSingle(@PathVariable long id, HttpServletResponse response){
-        if (doctorRepository.existsById(id))
-            doctorRepository.deleteById(id);
-        else
-            response.setStatus(409);
+    public void deleteSingle(@PathVariable("id") long id){
+            doctorService.deleteDoctor(id);
     }
 
     // Delete all
     @DeleteMapping("")
     public void deleteAll(){
-        doctorRepository.deleteAll();
+        doctorService.deleteAllDoctor();
     }
 }

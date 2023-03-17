@@ -28,8 +28,8 @@ public class User {
         this.name = name;
     }
 
-    public String getSurname() {
-        return surname;
+    public String getSurname(String surname) {
+        return this.surname;
     }
 
     public void setSurname(String surname) {

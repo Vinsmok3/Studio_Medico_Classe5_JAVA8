@@ -54,8 +54,8 @@ public class Patient extends User {
     }
 
     @Override
-    public String getSurname() {
-        return super.getSurname();
+    public String getSurname(String surname) {
+        return super.getSurname(surname);
     }
 
     @Override
