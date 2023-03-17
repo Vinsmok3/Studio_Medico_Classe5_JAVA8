@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-
 public class DoctorService {
 
    @Autowired
@@ -22,40 +21,45 @@ public class DoctorService {
 
    public DoctorDTO getDoctor(Long id){
        Doctor doctor = doctorRepository.findById(id).orElseThrow(RuntimeException::new);
-       return doctorEntitiesToResponses(doctor);
+           return doctorEntityToResponse(doctor);
    }
 
 
-    public List<DoctorDTO> getAllDoctor(){
-        return doctorRepository.findAll();
+    public List<Doctor> getAllDoctor(){
+        List<Doctor> doctorsList = new ArrayList<>();
+        doctorRepository.findAll();
+        return doctorsList;
    }
 
-   public DoctorDTO putDoctorWorkPlace(Long id, DoctorDTO request){
+   public DoctorDTO putDoctor(Long id, DoctorDTO request){
        Doctor doctor = doctorRepository.findById(id).orElseThrow(RuntimeException::new);
-       doctorRepository.delete(doctor);
-       return (DoctorDTO) doctorEntitiesToResponses (doctorRepository.save(doctorRequestToEntity(doctor)));
+       doctorRequestToEntity(request, doctor);
+       return doctorEntityToResponse (doctorRepository.save(doctor));
    }
+
    public DoctorDTO deleteDoctor (Long id){
        Doctor doctor = doctorRepository.findById(id).orElseThrow(RuntimeException::new);
        doctorRepository.delete(doctor);
-       return doctorEntitiesToResponses(doctor);
+       return doctorEntityToResponse(doctor);
    }
 
-    public List<DoctorDTO> deleteAllDoctor(){
-        return doctorRepository.deleteAll();
+    public List<Doctor> deleteAllDoctor(){
+        List<Doctor> doctorsList = new ArrayList<>();
+        doctorRepository.deleteAll();
+        return doctorsList;
     }
 
     private List<DoctorDTO> doctorEntitiesToResponses(List<Doctor> doctors) {
         List<DoctorDTO> response = new ArrayList<>();
         for(Doctor doctor : doctors) {
-            response.add(doctorEntitiesToResponses(doctor));
+            response.add(doctorEntityToResponse(doctor));
         }
         return response;
     }
 
     private Doctor doctorRequestToEntity(DoctorDTO request){
        Doctor doctor = new Doctor();
-       doctorRequestToEntity(request,doctor);
+       return doctorRequestToEntity(request,doctor);
     }
 
     private Doctor doctorRequestToEntity (DoctorDTO request, Doctor doctor){
@@ -63,7 +67,7 @@ public class DoctorService {
        doctor.setWorkplace(request.getWorkplace());
        doctor.setWorkingdays(request.getWorkingdays());
        doctor.setName(request.getName());
-       doctor.getSurname();
+       doctor.setSurname(request.getSurname());
        doctor.setEmail(request.getEmail());
        return doctor;
     }
@@ -75,7 +79,7 @@ public class DoctorService {
         response.setWorkplace(doctor.getWorkplace());
         response.setWorkingdays( doctor.getWorkingdays());
         response.setName( doctor.getName());
-        response.getSurname();
+        response.setSurname(doctor.getSurname());
         response.setEmail( doctor.getEmail());
         return response;
     }

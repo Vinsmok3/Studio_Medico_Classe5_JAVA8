@@ -28,7 +28,7 @@ public class User {
         this.name = name;
     }
 
-    public String getSurname(String surname) {
+    public String getSurname() {
         return this.surname;
     }
 

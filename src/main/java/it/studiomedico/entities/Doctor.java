@@ -54,7 +54,7 @@ public class Doctor extends User {
     }
 
     public String getSurname() {
-        return super.getSurname(surname);
+        return super.getSurname();
     }
 
     @Override
