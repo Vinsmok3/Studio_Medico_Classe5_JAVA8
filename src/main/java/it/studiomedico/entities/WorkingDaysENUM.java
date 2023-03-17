@@ -1,20 +1,26 @@
 package it.studiomedico.entities;
 
 public enum WorkingDaysENUM {
-    MONDAY(1,"Monday"),
-    TUESDAY(2,"Tuesday"),
-    WEDNESDAY(3,"Wednesday"),
-    THURSDAY(4,"Thursday"),
-    FRIDAY(5,"Friday"),
-    SATURDAY(6,"Saturday"),
-    SUNDAY(7, "Sunday");
+    MONDAY,
+    TUESDAY,
+    WEDNESDAY,
+    THURSDAY,
+    FRIDAY,
+    SATURDAY,
+    SUNDAY;
 
-    private final String daysENUM;
-    private final long id;
+    public void workingDays() {
+        for (WorkingDaysENUM days : WorkingDaysENUM.values()) {
+            System.out.println(days.name());
 
-    WorkingDaysENUM(long id, String daysENUM) {
-        this.id = id;
-        this.daysENUM = daysENUM;
+        }
+
+
     }
-
 }
+
+
+
+
+
+
