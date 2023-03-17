@@ -20,12 +20,12 @@ public class SecretaryService {
     public SecretaryDTO postSecretary;
 
     public SecretaryDTO postSecretary (SecretaryDTO request){
-        return secretaryEntityToResponse (secretaryRepository.saveAndFlush(secretaryRequestToEntity(request)));
+        return secretaryEntityToResponse (secretaryRepository.save(secretaryRequestToEntity(request)));
     }
 
     public SecretaryDTO getSecretary(Long id){
         Secretary secretary = secretaryRepository.findById(id).orElseThrow(RuntimeException::new);
-        return secretaryEntityToResponses(secretary);
+        return secretaryEntityToResponse(secretary);
     }
 
 
@@ -36,18 +36,18 @@ public class SecretaryService {
     public SecretaryDTO putSecretary(Long id, SecretaryDTO request){
         Secretary secretary = secretaryRepository.findById(id).orElseThrow(RuntimeException::new);
         secretaryRepository.delete(secretary);
-        return (DoctorDTO)secretaryEntitiesToResponse (secretaryRepository.save(secretaryRequestToEntity(secretary)));
+        return secretaryEntityToResponse (secretaryRepository.save(secretary));
     }
     public SecretaryDTO deleteSecretary (Long id){
         Secretary secretary = secretaryRepository.findById(id).orElseThrow(RuntimeException::new);
         secretaryRepository.delete(secretary);
-        return secretaryEntitiesToResponse(secretary);
+        return secretaryEntityToResponse(secretary);
     }
 
-    private List<SecretaryDTO> secretaryEntitiesToResponse(List<Secretary> secretaries){
+    private List<SecretaryDTO> secretaryEntitiesToResponses(List<Secretary> secretaries){
         List<SecretaryDTO> response = new ArrayList<>();
         for (Secretary secretary : secretaries) {
-            response.add( (SecretaryDTO) secretaryEntityToResponse((List<Secretary>) secretary));
+            response.add( secretaryEntityToResponse(secretary));
         }
         return response;
     }
@@ -66,7 +66,7 @@ public class SecretaryService {
         return secretary;
     }
 
-    private SecretaryDTO secretaryEntityToResponse(SecretaryDTO secretary){
+    private SecretaryDTO secretaryEntityToResponse(Secretary secretary){
         SecretaryDTO response = new SecretaryDTO();
         response.setIdSecretary(secretary.getIdSecretary());
         response.setName(secretary.getName());

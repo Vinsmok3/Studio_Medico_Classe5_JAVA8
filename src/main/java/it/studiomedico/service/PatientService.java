@@ -17,7 +17,7 @@ public class PatientService {
     private PatientRepository patientRepository;
 
     public PatientDTO postPatient(PatientDTO request){
-        return patientEntityToResponse (patientRepository.save(patientRequestToEntity(request));
+        return patientEntityToResponse (patientRepository.save(patientRequestToEntity(request)));
     }
 
     public PatientDTO getPatient (Long id){
@@ -32,7 +32,7 @@ public class PatientService {
     public PatientDTO putPatient(Long id,PatientDTO request){
         Patient patient = patientRepository.findById(id).orElseThrow(RuntimeException::new);
         patientRepository.delete(patient);
-        return (PatientDTO) patientEntityToResponse(patientRepository.save(patientRequestToEntity(patient)));
+        return (PatientDTO) patientEntityToResponse(patientRepository.save(patient));
     }
 
     public PatientDTO deletePatient (Long id){
@@ -41,17 +41,17 @@ public class PatientService {
         return (PatientDTO) patientEntityToResponse(patient);
     }
 
-    private List<PatientDTO> patientEntityToResponse(Patient patients){
+    private List<PatientDTO> patientEntitiesToResponses(List <Patient> patients){
         List<PatientDTO> response = new ArrayList<>();
         for (Patient patient : patients) {
-            response.add((PatientDTO) patientEntityToResponse(patient));
+            response.add (patientEntityToResponse(patient));
         }
         return response;
     }
 
-    private Patient patientRequestToEntity(Patient request){
+    private Patient patientRequestToEntity(PatientDTO request){
         Patient patient = new Patient();
-        patientRequestToEntity(request ,patient);
+        return patientRequestToEntity(request ,patient);
     }
 
     private Patient patientRequestToEntity(PatientDTO request,Patient patient){
@@ -64,7 +64,7 @@ public class PatientService {
         return patient;
     }
 
-    private Patient patientEntityToResponse(PatientDTO patient){
+    private PatientDTO patientEntityToResponse(Patient patient){
         PatientDTO response = new PatientDTO();
         response.setIdPatient(patient.getIdPatient());
         response.setName(patient.getName());
