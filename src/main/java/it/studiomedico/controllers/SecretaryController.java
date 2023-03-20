@@ -1,7 +1,8 @@
 package it.studiomedico.controllers;
 
+import it.studiomedico.dto.SecretaryDTO;
 import it.studiomedico.entities.Secretary;
-import it.studiomedico.repositories.SecretaryRepository;
+import it.studiomedico.service.SecretaryService;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -14,31 +15,29 @@ import java.util.List;
 public class SecretaryController {
 
     @Autowired
-    private SecretaryRepository secretaryRepository;
+    private SecretaryService secretaryService;
 
     //Create
     @PostMapping("/creation")
-    public Secretary create (@RequestBody Secretary secretary){
-        return secretaryRepository.saveAndFlush(secretary);
+    public SecretaryDTO create (@RequestBody SecretaryDTO secretary){
+        return secretaryService.postSecretary(secretary);
     }
 
     // View all
     @GetMapping("/viewAll")
     public List<Secretary> getAllSecretary(){
-        return secretaryRepository.findAll();
+        return secretaryService.getAllSecretary();
     }
 
     // View on by ID
     @PutMapping("/{id}")
-    public Secretary getSecretary(@PathVariable long id){
-        return secretaryRepository.existsById(id)
-                ?secretaryRepository.getById(id)
-                : new Secretary();
+    public SecretaryDTO getSecretary(@PathVariable ("id") long id){
+       return secretaryService.getSecretary(id);
     }
 
     // Update Workplace
     @PutMapping("/{id}")
-    public Secretary updateSecretaryWorkplace(@PathVariable long id, @RequestParam String Workplace){
+   /* public Secretary updateSecretaryWorkplace(@PathVariable long id, @RequestParam String Workplace){
         Secretary secretary = null;
         if (secretaryRepository.existsById(id)){
             secretary = secretaryRepository.getById(id);
@@ -48,19 +47,16 @@ public class SecretaryController {
 
         return secretary;
     }
-
+*/
     //Delete one secretary by ID
     @DeleteMapping("/{id}")
-    public void deleteOneSecretaryById(@PathVariable long id, HttpServletResponse response){
-        if (secretaryRepository.existsById(id))
-            secretaryRepository.deleteById(id);
-        else
-            response.setStatus(409);
+    public SecretaryDTO deleteOneSecretaryById(@PathVariable long id, HttpServletResponse response){
+       return secretaryService.deleteSecretary(id);
     }
 
     // Delete All
     @DeleteMapping("/deleteAll")
     public void deleteAllSecretary(){
-        secretaryRepository.deleteAll();
+        secretaryService.deleteAllSecretary();
     }
 }

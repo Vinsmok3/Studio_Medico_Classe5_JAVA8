@@ -2,6 +2,7 @@ package it.studiomedico.service;
 
 
 import it.studiomedico.dto.PatientDTO;
+import it.studiomedico.entities.Doctor;
 import it.studiomedico.entities.Patient;
 import it.studiomedico.repositories.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,12 @@ public class PatientService {
         Patient patient = patientRepository.findById(id).orElseThrow(RuntimeException::new);
         patientRepository.delete(patient);
         return (PatientDTO) patientEntityToResponse(patient);
+    }
+
+    public List<Patient> deleteAllPatient(){
+        List<Patient> patientList = new ArrayList<>();
+        patientRepository.deleteAll();
+        return patientList;
     }
 
     private List<PatientDTO> patientEntitiesToResponses(List <Patient> patients){

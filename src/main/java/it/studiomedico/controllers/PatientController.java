@@ -1,8 +1,8 @@
 package it.studiomedico.controllers;
 
-import it.studiomedico.entities.Doctor;
+import it.studiomedico.dto.PatientDTO;
 import it.studiomedico.entities.Patient;
-import it.studiomedico.repositories.PatientRepository;
+import it.studiomedico.service.PatientService;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -14,41 +14,36 @@ import java.util.List;
 public class PatientController {
 
     @Autowired
-    private PatientRepository patientRepository;
+    private PatientService patientService;
 
     //Creating patient
     @PostMapping("/createPatient")
-    public Patient create(@RequestBody Patient patient){
-        return patientRepository.saveAndFlush(patient);
+    public PatientDTO create(@RequestBody PatientDTO patient){
+       return patientService.postPatient(patient);
     }
 
     //Reading all patients
     @GetMapping("/getAll")
     public List<Patient> getAllPatients(){
-        return patientRepository.findAll();
+        return patientService.allPatients();
     }
 
     // Reading a patient
     @GetMapping("/{id}")
-    public Patient getPatient(@PathVariable long id){
-        return patientRepository.existsById(id)
-                ? patientRepository.getById(id)
-                : new Patient();
+    public PatientDTO getPatient(@PathVariable ("id") long id){
+        return patientService.getPatient(id);
     }
 
     // Delete a patient
     @DeleteMapping("/{id}")
-    public void deleteSingle(@PathVariable long id, HttpServletResponse response){
-        if (patientRepository.existsById(id))
-            patientRepository.deleteById(id);
-        else
-            response.setStatus(409);
+    public void deleteSingle(@PathVariable("id") long id, HttpServletResponse response){
+        patientService.deletePatient(id);
     }
 
     // Delete all patients
     @DeleteMapping("/deleteAll")
     public void deleteAll(){
-        patientRepository.deleteAll();
+        patientService.deleteAllPatient();
     }
 }
 

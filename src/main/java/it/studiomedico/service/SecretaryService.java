@@ -44,6 +44,12 @@ public class SecretaryService {
         return secretaryEntityToResponse(secretary);
     }
 
+    public List<Secretary> deleteAllSecretary(){
+        List<Secretary> secretariesList = new ArrayList<>();
+        secretaryRepository.deleteAll();
+        return secretariesList;
+    }
+
     private List<SecretaryDTO> secretaryEntitiesToResponses(List<Secretary> secretaries){
         List<SecretaryDTO> response = new ArrayList<>();
         for (Secretary secretary : secretaries) {
