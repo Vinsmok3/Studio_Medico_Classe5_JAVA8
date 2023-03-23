@@ -67,7 +67,6 @@ public class SecretaryService {
         secretary.setName(request.getName());
         secretary.setSurname(request.getSurname());
         secretary.setWorkplace(request.getWorkplace());
-        secretary.setWorkingDays(request.getWorkingDays());
         secretary.setEmail(request.getEmail());
         return secretary;
     }
@@ -78,7 +77,6 @@ public class SecretaryService {
         response.setName(secretary.getName());
         response.setSurname(secretary.getSurname());
         response.setWorkplace(secretary.getWorkplace());
-        response.setWorkingDays(secretary.getWorkingDays());
         response.setEmail(secretary.getEmail());
         return response;
     }

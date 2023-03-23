@@ -65,7 +65,6 @@ public class DoctorService {
     private Doctor doctorRequestToEntity (DoctorDTO request, Doctor doctor){
        doctor.setSpecialization(request.getSpecialization());
        doctor.setWorkplace(request.getWorkplace());
-       doctor.setWorkingdays(request.getWorkingdays());
        doctor.setName(request.getName());
        doctor.setSurname(request.getSurname());
        doctor.setEmail(request.getEmail());
@@ -77,7 +76,6 @@ public class DoctorService {
         response.setIdDoctor(doctor.getIdDoctor());
         response.setSpecialization( doctor.getSpecialization());
         response.setWorkplace(doctor.getWorkplace());
-        response.setWorkingdays( doctor.getWorkingdays());
         response.setName( doctor.getName());
         response.setSurname(doctor.getSurname());
         response.setEmail( doctor.getEmail());

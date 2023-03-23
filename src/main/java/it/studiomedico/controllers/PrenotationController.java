@@ -1,8 +1,7 @@
 package it.studiomedico.controllers;
 
-import it.studiomedico.entities.Doctor;
 import it.studiomedico.entities.Prenotation;
-import it.studiomedico.entities.StatusENUM;
+import it.studiomedico.entities.recordEnum.BookingENUM;
 import it.studiomedico.repositories.PrenotationRepository;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +39,7 @@ public class PrenotationController {
     }
 
     // UpdatePrenotationDate
-    @PutMapping("/{id}")
+    @PutMapping("/Date/{id}")
     public Prenotation updatePrenotationDate(@PathVariable long id, @RequestParam LocalDateTime date){
         Prenotation prenotation;
         if (prenotationRepository.existsById(id)){
@@ -54,12 +53,12 @@ public class PrenotationController {
     }
 
     // UpdateStatus
-    @PutMapping("/{id}")
-    public Prenotation updatePrenotationStatus(@PathVariable long id, @RequestParam StatusENUM status){
+    @PutMapping("/Status/{id}")
+    public Prenotation updatePrenotationStatus(@PathVariable long id, @RequestParam BookingENUM status){
         Prenotation prenotation;
         if (prenotationRepository.existsById(id)){
             prenotation = prenotationRepository.getById(id);
-            prenotation.setStatus(status);
+            prenotation.setStatusBooking(status);
             prenotation = prenotationRepository.saveAndFlush(prenotation);
         }else{
             prenotation = new Prenotation();

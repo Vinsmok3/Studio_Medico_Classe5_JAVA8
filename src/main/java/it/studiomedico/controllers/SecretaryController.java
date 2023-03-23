@@ -35,24 +35,29 @@ public class SecretaryController {
        return secretaryService.getSecretary(id);
     }
 
+    /*
     // Update Workplace
-    @PutMapping("/{id}")
-   /* public Secretary updateSecretaryWorkplace(@PathVariable long id, @RequestParam String Workplace){
-        Secretary secretary = null;
-        if (secretaryRepository.existsById(id)){
-            secretary = secretaryRepository.getById(id);
-            secretary.setWorkplace(Workplace);
-            secretary= secretaryRepository.saveAndFlush(secretary);
-        }
 
-        return secretary;
-    }
-*/
+     @PutMapping("/Workplace/{id}")
+        public Secretary updateSecretaryWorkplace(@PathVariable long id, @RequestParam String Workplace){
+         Secretary secretary = null;
+         if (secretaryRepository.existsById(id)){
+             secretary = secretaryRepository.getById(id);
+             secretary.setWorkplace(Workplace);
+             secretary= secretaryRepository.saveAndFlush(secretary);
+         }
+
+         return secretary;
+     }
+ */
+    //Error
+    /*
     //Delete one secretary by ID
     @DeleteMapping("/{id}")
     public SecretaryDTO deleteOneSecretaryById(@PathVariable long id, HttpServletResponse response){
        return secretaryService.deleteSecretary(id);
     }
+    */
 
     // Delete All
     @DeleteMapping("/deleteAll")

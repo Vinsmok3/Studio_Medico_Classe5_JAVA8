@@ -1,18 +1,17 @@
 package it.studiomedico.dto;
 
-import it.studiomedico.entities.Doctor;
-import it.studiomedico.entities.StatusENUM;
+import it.studiomedico.entities.recordEnum.BookingENUM;
 
 import java.time.LocalDateTime;
 
 public class PrenotationDTO {
     private Long idPrenotation;
     private LocalDateTime date;
-    private StatusENUM status;
+    private BookingENUM status;
     private PatientDTO patientDTO;
     private DoctorDTO doctorDTO;
 
-    public PrenotationDTO(LocalDateTime date, StatusENUM status, PatientDTO patientDTO, DoctorDTO doctorDTO) {
+    public PrenotationDTO(LocalDateTime date, BookingENUM status, PatientDTO patientDTO, DoctorDTO doctorDTO) {
         this.date = date;
         this.status = status;
         this.patientDTO = patientDTO;
@@ -37,11 +36,11 @@ public class PrenotationDTO {
         this.date = date;
     }
 
-    public StatusENUM getStatus() {
+    public BookingENUM getStatus() {
         return status;
     }
 
-    public void setStatus(StatusENUM status) {
+    public void setStatus(BookingENUM status) {
         this.status = status;
     }
 

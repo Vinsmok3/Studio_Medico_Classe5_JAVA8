@@ -1,6 +1,6 @@
 package it.studiomedico.dto;
 
-import it.studiomedico.entities.GenderENUM;
+import it.studiomedico.entities.recordEnum.GenderENUM;
 
 public class PatientDTO extends UserDTO{
     private Long idPatient;

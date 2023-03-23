@@ -1,18 +1,13 @@
 package it.studiomedico.dto;
 
-import it.studiomedico.entities.WorkingDaysENUM;
-
-
 public class DoctorDTO extends UserDTO{
     private Long idDoctor;
     private String workplace;
-    private WorkingDaysENUM workingdays;
     private String specialization;
 
-    public DoctorDTO(String name, String surname, String email, String workplace, WorkingDaysENUM workingdays, String specialization) {
+    public DoctorDTO(String name, String surname, String email, String workplace, String specialization) {
         super(name, surname, email);
         this.workplace = workplace;
-        this.workingdays = workingdays;
         this.specialization = specialization;
     }
 
@@ -34,14 +29,6 @@ public class DoctorDTO extends UserDTO{
 
     public void setWorkplace(String workplace) {
         this.workplace = workplace;
-    }
-
-    public WorkingDaysENUM getWorkingdays() {
-        return workingdays;
-    }
-
-    public void setWorkingdays(WorkingDaysENUM workingdays) {
-        this.workingdays = workingdays;
     }
 
     public String getSpecialization() {

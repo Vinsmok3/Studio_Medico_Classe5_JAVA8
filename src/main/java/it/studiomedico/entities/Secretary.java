@@ -1,12 +1,14 @@
 package it.studiomedico.entities;
 
+import it.studiomedico.entities.recordEnum.RecordStatusENUM;
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
 @Table(name = "secretary")
-public class Secretary extends User  {
+public class Secretary extends Person {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,19 +18,13 @@ public class Secretary extends User  {
     @Column(name = "workplace", nullable = false)
     private String workplace;
 
-    @Column(name = "working_days", nullable = false)
-    @Enumerated(EnumType.STRING)
-    private WorkingDaysENUM workingDays;
-
-
     @OneToMany(mappedBy = "secretary")
     private List<Doctor> doctorList;
 
 
-    public Secretary(String name, String surname, String email, String workplace, WorkingDaysENUM workingDays) {
+    public Secretary(String name, String surname, String email, String workplace) {
         super(name, surname, email);
-        this.workplace = workplace;
-        this.workingDays = workingDays;
+        this.workplace=workplace;
     }
 
     public Secretary() {
@@ -46,8 +42,8 @@ public class Secretary extends User  {
     }
 
     @Override
-    public String getSurname(String surname) {
-        return super.getSurname(surname);
+    public String getSurname() {
+        return super.getSurname();
     }
 
     @Override
@@ -63,6 +59,56 @@ public class Secretary extends User  {
     @Override
     public void setEmail(String email) {
         super.setEmail(email);
+    }
+
+    @Override
+    public String getCreatedBy() {
+        return super.getCreatedBy();
+    }
+
+    @Override
+    public void setCreatedBy(String createdBy) {
+        super.setCreatedBy(createdBy);
+    }
+
+    @Override
+    public String getModifiedBy() {
+        return super.getModifiedBy();
+    }
+
+    @Override
+    public void setModifiedBy(String modifiedBy) {
+        super.setModifiedBy(modifiedBy);
+    }
+
+    @Override
+    public LocalDate getCreatedOn() {
+        return super.getCreatedOn();
+    }
+
+    @Override
+    public void setCreatedOn(LocalDate createdOn) {
+        super.setCreatedOn(createdOn);
+    }
+
+    @Override
+    public LocalDate getModifyOn() {
+        return super.getModifyOn();
+    }
+
+    @Override
+    public void setModifyOn(LocalDate modifyOn) {
+        super.setModifyOn(modifyOn);
+    }
+
+    @Override
+    public RecordStatusENUM getStatus() {
+        return super.getStatus();
+    }
+
+    @Override
+    public void setStatus(RecordStatusENUM status) {
+        super.setStatus(status);
     }
 
     public Long getIdSecretary() {
@@ -81,11 +127,4 @@ public class Secretary extends User  {
         this.workplace = workplace;
     }
 
-    public WorkingDaysENUM getWorkingDays() {
-        return workingDays;
-    }
-
-    public void setWorkingDays(WorkingDaysENUM workingDays) {
-        this.workingDays = workingDays;
-    }
 }
