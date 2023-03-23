@@ -1,14 +1,20 @@
 package it.studiomedico.dto;
 
+import it.studiomedico.entities.recordEnum.RecordStatusENUM;
+
+import java.time.LocalDate;
+
 public class DoctorDTO extends UserDTO{
     private Long idDoctor;
     private String workplace;
     private String specialization;
 
-    public DoctorDTO(String name, String surname, String email, String workplace, String specialization) {
-        super(name, surname, email);
-        this.workplace = workplace;
-        this.specialization = specialization;
+
+    public DoctorDTO(String name, String surname, String email, String createdBy, String modifiedBy, LocalDate createdOn, LocalDate modifyOn, RecordStatusENUM status,String workplace, String specialization) {
+        super(name, surname, email, createdBy, modifiedBy, createdOn, modifyOn, status);
+        this.workplace=workplace;
+        this.specialization=specialization;
+
     }
 
     public DoctorDTO() {
@@ -40,6 +46,16 @@ public class DoctorDTO extends UserDTO{
     }
 
     @Override
+    public RecordStatusENUM getStatus() {
+        return super.getStatus();
+    }
+
+    @Override
+    public void setStatus(RecordStatusENUM status) {
+        super.setStatus(status);
+    }
+
+    @Override
     public String getName() {
         return super.getName();
     }
@@ -67,5 +83,45 @@ public class DoctorDTO extends UserDTO{
     @Override
     public void setEmail(String email) {
         super.setEmail(email);
+    }
+
+    @Override
+    public String getCreatedBy() {
+        return super.getCreatedBy();
+    }
+
+    @Override
+    public void setCreatedBy(String createdBy) {
+        super.setCreatedBy(createdBy);
+    }
+
+    @Override
+    public String getModifiedBy() {
+        return super.getModifiedBy();
+    }
+
+    @Override
+    public void setModifiedBy(String modifiedBy) {
+        super.setModifiedBy(modifiedBy);
+    }
+
+    @Override
+    public LocalDate getCreatedOn() {
+        return super.getCreatedOn();
+    }
+
+    @Override
+    public void setCreatedOn(LocalDate createdOn) {
+        super.setCreatedOn(createdOn);
+    }
+
+    @Override
+    public LocalDate getModifyOn() {
+        return super.getModifyOn();
+    }
+
+    @Override
+    public void setModifyOn(LocalDate modifyOn) {
+        super.setModifyOn(modifyOn);
     }
 }
