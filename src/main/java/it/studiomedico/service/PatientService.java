@@ -68,6 +68,10 @@ public class PatientService {
         patient.setFiscalCode(request.getFiscalCode());
         patient.setEmail(request.getEmail());
         patient.setPhoneNumber(request.getPhoneNumber());
+        patient.setCreatedBy(request.getCreatedBy());
+        patient.setCreatedOn(request.getCreatedOn());
+        patient.setModifiedBy(request.getModifiedBy());
+        patient.setModifyOn(request.getModifyOn());
         return patient;
     }
 
@@ -80,6 +84,11 @@ public class PatientService {
         response.setFiscalCode(patient.getFiscalCode());
         response.setEmail(patient.getEmail());
         response.setPhoneNumber(patient.getPhoneNumber());
+        response.setPhoneNumber(patient.getPhoneNumber());
+        response.setCreatedBy(patient.getCreatedBy());
+        response.setCreatedOn(patient.getCreatedOn());
+        response.setModifiedBy(patient.getModifiedBy());
+        response.setModifyOn(patient.getModifyOn());
         return response;
     }
 

@@ -68,6 +68,10 @@ public class SecretaryService {
         secretary.setSurname(request.getSurname());
         secretary.setWorkplace(request.getWorkplace());
         secretary.setEmail(request.getEmail());
+        secretary.setCreatedBy(request.getCreatedBy());
+        secretary.setCreatedOn(request.getCreatedOn());
+        secretary.setModifiedBy(request.getModifiedBy());
+        secretary.setModifyOn(request.getModifyOn());
         return secretary;
     }
 
@@ -78,6 +82,10 @@ public class SecretaryService {
         response.setSurname(secretary.getSurname());
         response.setWorkplace(secretary.getWorkplace());
         response.setEmail(secretary.getEmail());
+        response.setCreatedBy(secretary.getCreatedBy());
+        response.setCreatedOn(secretary.getCreatedOn());
+        response.setModifiedBy(secretary.getModifiedBy());
+        response.setModifyOn(secretary.getModifyOn());
         return response;
     }
 }

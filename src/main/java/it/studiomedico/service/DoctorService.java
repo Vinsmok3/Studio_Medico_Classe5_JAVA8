@@ -68,6 +68,10 @@ public class DoctorService {
        doctor.setName(request.getName());
        doctor.setSurname(request.getSurname());
        doctor.setEmail(request.getEmail());
+       doctor.setCreatedBy(request.getCreatedBy());
+       doctor.setCreatedOn(request.getCreatedOn());
+       doctor.setModifiedBy(request.getModifiedBy());
+       doctor.setModifyOn(request.getModifyOn());
        return doctor;
     }
 
@@ -79,6 +83,10 @@ public class DoctorService {
         response.setName( doctor.getName());
         response.setSurname(doctor.getSurname());
         response.setEmail( doctor.getEmail());
+        response.setCreatedBy(doctor.getCreatedBy());
+        response.setCreatedOn(doctor.getCreatedOn());
+        response.setModifiedBy(doctor.getModifiedBy());
+        response.setModifyOn(doctor.getModifyOn());
         return response;
     }
 
