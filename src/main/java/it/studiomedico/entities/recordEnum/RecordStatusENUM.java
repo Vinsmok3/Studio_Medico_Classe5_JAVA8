@@ -1,8 +1,8 @@
 package it.studiomedico.entities.recordEnum;
 
 public enum RecordStatusENUM {
-    ACTIVE("Active"),
-    DELETED("Deleted");
+    A("Active"),
+    D("Deleted");
     private String description;
 
     RecordStatusENUM(String description) {

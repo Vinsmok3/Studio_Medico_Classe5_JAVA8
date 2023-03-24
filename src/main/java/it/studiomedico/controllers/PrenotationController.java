@@ -3,6 +3,7 @@ package it.studiomedico.controllers;
 import it.studiomedico.entities.Prenotation;
 import it.studiomedico.entities.recordEnum.BookingENUM;
 import it.studiomedico.repositories.PrenotationRepository;
+import it.studiomedico.service.PrenotationService;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +17,7 @@ public class PrenotationController {
 
     @Autowired
     private PrenotationRepository prenotationRepository;
-
+    private PrenotationService prenotationService;
     //Create
     @PostMapping("")
     public Prenotation create(@RequestBody Prenotation prenotation){
@@ -76,8 +77,10 @@ public class PrenotationController {
     }
 
     // Delete all
-    @DeleteMapping("")
-    public void deleteAll(){
-        prenotationRepository.deleteAll();
+    @DeleteMapping("/logic")
+    public void deleteAll(Long id){
+        prenotationService.deleteById(id);
     }
+
+
 }
