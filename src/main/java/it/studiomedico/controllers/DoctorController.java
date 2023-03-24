@@ -23,7 +23,7 @@ public class DoctorController {
 
     // Read All
     @GetMapping("/alldoctor")
-    public List<Doctor> getAllDoctors(){
+    public List<DoctorDTO> getAllDoctors(){
         return doctorService.getAllDoctor();
     }
 

@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Service
 public class PrenotationService {
@@ -16,13 +18,12 @@ public class PrenotationService {
     PrenotationRepository prenotationRepository;
     @Autowired
     DoctorRepository doctorRepository;
-    @Autowired
-    RecordStatusENUM recordStatusENUM;
 
-    public ResponseEntity deleteById(Long id) {
+
+    public ResponseEntity deleteById(@PathVariable Long id) {
         if (doctorRepository.existsById(id)) {
             Doctor doctor = doctorRepository.findById(id).get();
-            doctor.setStatus(recordStatusENUM.D);
+            doctor.setStatus(RecordStatusENUM.D);
             doctorRepository.saveAndFlush(doctor);
             return new ResponseEntity(HttpStatus.NO_CONTENT);
         } else {

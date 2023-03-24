@@ -77,7 +77,7 @@ public class PrenotationController {
     }
 
     // Delete all
-    @DeleteMapping("/logic")
+    @DeleteMapping("/logic/{id}")
     public void deleteAll(Long id){
         prenotationService.deleteById(id);
     }

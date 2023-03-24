@@ -2,6 +2,7 @@ package it.studiomedico.service;
 
 import it.studiomedico.dto.DoctorDTO;
 import it.studiomedico.entities.Doctor;
+import it.studiomedico.entities.recordEnum.RecordStatusENUM;
 import it.studiomedico.repositories.DoctorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +17,7 @@ public class DoctorService {
     private DoctorRepository doctorRepository;
 
    public DoctorDTO postDoctor (DoctorDTO request){
-      return doctorEntityToResponse (doctorRepository.save(doctorRequestToEntity(request)));
+      return doctorEntityToResponse (doctorRepository.saveAndFlush(doctorRequestToEntity(request)));
    }
 
    public DoctorDTO getDoctor(Long id){
@@ -25,10 +26,10 @@ public class DoctorService {
    }
 
 
-    public List<Doctor> getAllDoctor(){
-        List<Doctor> doctorsList = new ArrayList<>();
-        doctorRepository.findAll();
-        return doctorsList;
+    public List<DoctorDTO> getAllDoctor(){
+       List<Doctor> alldocs = new ArrayList<>();
+       alldocs.addAll(doctorRepository.findAll());
+       return doctorEntitiesToResponses(alldocs);
    }
 
    public DoctorDTO putDoctor(Long id, DoctorDTO request){
@@ -72,6 +73,7 @@ public class DoctorService {
        doctor.setCreatedOn(request.getCreatedOn());
        doctor.setModifiedBy(request.getModifiedBy());
        doctor.setModifyOn(request.getModifyOn());
+       doctor.setStatus(request.getStatus());
        return doctor;
     }
 
@@ -87,6 +89,7 @@ public class DoctorService {
         response.setCreatedOn(doctor.getCreatedOn());
         response.setModifiedBy(doctor.getModifiedBy());
         response.setModifyOn(doctor.getModifyOn());
+        response.setStatus(RecordStatusENUM.A);
         return response;
     }
 
