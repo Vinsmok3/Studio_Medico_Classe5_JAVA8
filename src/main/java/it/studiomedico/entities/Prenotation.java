@@ -139,4 +139,5 @@ public class Prenotation {
     public void setDoctor(Doctor doctor) {
         this.doctor = doctor;
     }
+
 }

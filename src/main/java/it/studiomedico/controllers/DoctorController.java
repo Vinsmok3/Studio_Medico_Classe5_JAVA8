@@ -5,9 +5,11 @@ import it.studiomedico.entities.Doctor;
 import it.studiomedico.service.DoctorService;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/doctor")
@@ -17,60 +19,44 @@ public class DoctorController {
 
     //Create
     @PostMapping("/create")
-    public DoctorDTO create(@RequestBody DoctorDTO doctor){
-        return doctorService.postDoctor(doctor);
+    public ResponseEntity<Doctor> create(@RequestBody Doctor doctor){
+        return doctorService.createDoctor(doctor);
     }
 
     // Read All
     @GetMapping("/alldoctor")
-    public List<DoctorDTO> getAllDoctors(){
-        return doctorService.getAllDoctor();
+    public List<Doctor> getAllDoctors(){
+        return doctorService.getAllDoctors();
     }
 
 
     // Read One
     @GetMapping("/{id}")
-    public DoctorDTO getDoctor(@PathVariable("id") long id){
+    public ResponseEntity<Optional<Doctor>> getDoctor(@PathVariable Long id){
         return doctorService.getDoctor(id);
     }
-
-    // UpdateWorkplace
-   /* @PutMapping("/{id}")
-    public DoctorDTO updateDoctorWorkplace(@PathVariable long id, @RequestParam String Workplace){
-        Doctor doctor;
-        if (doctorRepository.existsById(id)){
-            doctor = doctorRepository.getById(id);
-            doctor.setWorkplace(Workplace);
-            doctor = doctorRepository.saveAndFlush(doctor);
-        }else{
-            doctor = new Doctor();
-        }
-        return doctor;
+    //Update One
+    @PatchMapping("/update/{id}")
+    public ResponseEntity<Doctor> updateDoctor(@PathVariable Long id, @RequestBody DoctorDTO doctorDTO){
+        return doctorService.updateDoctor(id,doctorDTO);
     }
-
-    // UpdateSpecialization
-    @PutMapping("/{id}")
-    public Doctor updateDoctorSpecialization(@PathVariable long id, @RequestParam String Specialization){
-        Doctor doctor;
-        if (doctorRepository.existsById(id)){
-            doctor = doctorRepository.getById(id);
-            doctor.setSpecialization(Specialization);
-            doctor = doctorRepository.saveAndFlush(doctor);
-        }else{
-            doctor = new Doctor();
-        }
-        return doctor;
-  }*/
-
     // Delete a specific Doctor
-    @DeleteMapping("/{id}")
-    public void deleteSingle(@PathVariable("id") long id){
-            doctorService.deleteDoctor(id);
+    @PatchMapping("/delete/{id}")
+    public ResponseEntity deleteSingle(@PathVariable Long id){
+            return doctorService.deleteDoctor(id);
     }
 
     // Delete all
-    @DeleteMapping("")
+    @PatchMapping("/deleteAll")
     public void deleteAll(){
         doctorService.deleteAllDoctor();
     }
+
+    //Assign a Secretary
+    @PatchMapping
+    public ResponseEntity<Doctor> assignSecretary(@RequestParam Long idDoctor, @RequestParam Long idSecretary) {
+        return doctorService.secretaryDoc(idDoctor, idSecretary);
+    }
+
+
 }

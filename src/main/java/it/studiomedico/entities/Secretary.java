@@ -127,4 +127,11 @@ public class Secretary extends Person {
         this.workplace = workplace;
     }
 
+    public List<Doctor> getDoctorList() {
+        return doctorList;
+    }
+
+    public void setDoctorList(List<Doctor> doctorList) {
+        this.doctorList = doctorList;
+    }
 }

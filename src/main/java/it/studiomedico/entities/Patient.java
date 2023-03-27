@@ -158,7 +158,21 @@ public class Patient extends Person {
         this.gender = gender;
     }
 
+    public Doctor getDoctor() {
+        return doctor;
+    }
 
+    public void setDoctor(Doctor doctor) {
+        this.doctor = doctor;
+    }
+
+    public List<Prenotation> getPrenotationList() {
+        return prenotationList;
+    }
+
+    public void setPrenotationList(List<Prenotation> prenotationList) {
+        this.prenotationList = prenotationList;
+    }
 }
 
 

@@ -144,4 +144,28 @@ public class Doctor extends Person {
     public void setSpecialization(String specialization) {
         this.specialization = specialization;
     }
+
+    public Secretary getSecretary() {
+        return secretary;
+    }
+
+    public void setSecretary(Secretary secretary) {
+        this.secretary = secretary;
+    }
+
+    public List<Prenotation> getPrenotationList() {
+        return prenotationList;
+    }
+
+    public void setPrenotationList(List<Prenotation> prenotationList) {
+        this.prenotationList = prenotationList;
+    }
+
+    public List<Patient> getPatientList() {
+        return patientList;
+    }
+
+    public void setPatientList(List<Patient> patientList) {
+        this.patientList = patientList;
+    }
 }
