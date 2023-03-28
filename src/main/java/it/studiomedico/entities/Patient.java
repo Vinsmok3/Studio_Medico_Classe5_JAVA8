@@ -35,10 +35,10 @@ public class Patient extends Person {
     private List<Prenotation> prenotationList;
 
 
-    public Patient(String name, String surname, String email, String fiscalCode, String phoneNumber, GenderENUM gender) {
+    public Patient(String name, String surname, String email, String phoneNumber, String fiscalCode, GenderENUM gender) {
         super(name, surname, email);
-        this.fiscalCode=fiscalCode;
         this.phoneNumber=phoneNumber;
+        this.fiscalCode=fiscalCode;
         this.gender=gender;
     }
 
