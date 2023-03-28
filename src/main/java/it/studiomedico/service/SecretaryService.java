@@ -1,91 +1,76 @@
 package it.studiomedico.service;
 
-import it.studiomedico.dto.DoctorDTO;
 import it.studiomedico.dto.SecretaryDTO;
-import it.studiomedico.entities.Doctor;
 import it.studiomedico.entities.Secretary;
+import it.studiomedico.entities.recordEnum.RecordStatusENUM;
 import it.studiomedico.repositories.SecretaryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class SecretaryService {
-
     @Autowired
     private SecretaryRepository secretaryRepository;
 
-    public SecretaryDTO postSecretary;
-
-    public SecretaryDTO postSecretary (SecretaryDTO request){
-        return secretaryEntityToResponse (secretaryRepository.save(secretaryRequestToEntity(request)));
+    public ResponseEntity <Secretary> createSecretary(Secretary secretary){
+        secretary.setStatus(RecordStatusENUM.A);
+        secretaryRepository.save(secretary);
+        return ResponseEntity.status(201).body(secretary);
     }
-
-    public SecretaryDTO getSecretary(Long id){
-        Secretary secretary = secretaryRepository.findById(id).orElseThrow(RuntimeException::new);
-        return secretaryEntityToResponse(secretary);
-    }
-
 
     public List<Secretary> getAllSecretary(){
-        return secretaryRepository.findAll();
+        List<Secretary> allSecretaries = new ArrayList<>();
+        allSecretaries.addAll(secretaryRepository.findAll());
+        return allSecretaries;
     }
 
-    public SecretaryDTO putSecretary(Long id, SecretaryDTO request){
-        Secretary secretary = secretaryRepository.findById(id).orElseThrow(RuntimeException::new);
-        secretaryRepository.delete(secretary);
-        return secretaryEntityToResponse (secretaryRepository.save(secretary));
-    }
-    public SecretaryDTO deleteSecretary (Long id){
-        Secretary secretary = secretaryRepository.findById(id).orElseThrow(RuntimeException::new);
-        secretaryRepository.delete(secretary);
-        return secretaryEntityToResponse(secretary);
-    }
-
-    public List<Secretary> deleteAllSecretary(){
-        List<Secretary> secretariesList = new ArrayList<>();
-        secretaryRepository.deleteAll();
-        return secretariesList;
-    }
-
-    private List<SecretaryDTO> secretaryEntitiesToResponses(List<Secretary> secretaries){
-        List<SecretaryDTO> response = new ArrayList<>();
-        for (Secretary secretary : secretaries) {
-            response.add( secretaryEntityToResponse(secretary));
+    public ResponseEntity deleteSecretary (Long id){
+        if (secretaryRepository.existsById(id)) {
+            Secretary secretary = secretaryRepository.findById(id).get();
+            secretary.setStatus(RecordStatusENUM.D);
+            secretaryRepository.saveAndFlush(secretary);
+            return new ResponseEntity<>("Succesfully deleted", HttpStatus.NO_CONTENT);
+        }else{
+            return new ResponseEntity<>("no doctor with the id: "+id,HttpStatus.NOT_FOUND);
         }
-        return response;
     }
 
-    private Secretary secretaryRequestToEntity(SecretaryDTO request){
-        Secretary secretary = new Secretary();
-        return secretaryRequestToEntity(request, secretary);
+    public ResponseEntity<Optional<Secretary>> getSecretary (Long id){
+        if (secretaryRepository.existsById(id)){
+            Optional<Secretary> secretary = secretaryRepository.findById(id);
+            return ResponseEntity.ok().body(secretary);
+        }
+        return new ResponseEntity("no secretary exiat with id "+id, HttpStatus.NOT_FOUND);
     }
 
-    private Secretary secretaryRequestToEntity(SecretaryDTO request, Secretary secretary){
-        secretary.setName(request.getName());
-        secretary.setSurname(request.getSurname());
-        secretary.setWorkplace(request.getWorkplace());
-        secretary.setEmail(request.getEmail());
-        secretary.setCreatedBy(request.getCreatedBy());
-        secretary.setCreatedOn(request.getCreatedOn());
-        secretary.setModifiedBy(request.getModifiedBy());
-        secretary.setModifyOn(request.getModifyOn());
-        return secretary;
+    public ResponseEntity<Secretary> updateSecretary(Long id,SecretaryDTO secretaryDTO){
+        Optional<Secretary> secretaryUpdate = secretaryRepository.findById(id);
+        if (secretaryUpdate.isPresent()){
+            Secretary secretary = secretaryUpdate.get();
+            secretary.setName(secretaryDTO.getName());
+            secretary.setSurname(secretaryDTO.getSurname());
+            secretary.setEmail(secretaryDTO.getEmail());
+            secretary.setWorkplace(secretaryDTO.getWorkplace());
+
+            secretaryRepository.saveAndFlush(secretary);
+            return ResponseEntity.ok().body(secretary);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
-    private SecretaryDTO secretaryEntityToResponse(Secretary secretary){
-        SecretaryDTO response = new SecretaryDTO();
-        response.setIdSecretary(secretary.getIdSecretary());
-        response.setName(secretary.getName());
-        response.setSurname(secretary.getSurname());
-        response.setWorkplace(secretary.getWorkplace());
-        response.setEmail(secretary.getEmail());
-        response.setCreatedBy(secretary.getCreatedBy());
-        response.setCreatedOn(secretary.getCreatedOn());
-        response.setModifiedBy(secretary.getModifiedBy());
-        response.setModifyOn(secretary.getModifyOn());
-        return response;
+    public ResponseEntity deleteAllSecretary(){
+        secretaryRepository.findAll().forEach(secretary ->{
+            secretary.setStatus(RecordStatusENUM.D);
+            secretaryRepository.saveAndFlush(secretary);
+        });
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
+
 }

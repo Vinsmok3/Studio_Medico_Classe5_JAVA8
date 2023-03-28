@@ -3,11 +3,12 @@ package it.studiomedico.controllers;
 import it.studiomedico.dto.SecretaryDTO;
 import it.studiomedico.entities.Secretary;
 import it.studiomedico.service.SecretaryService;
-import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/secretary")
@@ -19,49 +20,38 @@ public class SecretaryController {
 
     //Create
     @PostMapping("/creation")
-    public SecretaryDTO create (@RequestBody SecretaryDTO secretary){
-        return secretaryService.postSecretary(secretary);
+    public ResponseEntity<Secretary> create (@RequestBody Secretary secretary){
+        return secretaryService.createSecretary(secretary);
     }
 
     // View all
     @GetMapping("/viewAll")
-    public List<Secretary> getAllSecretary(){
+    public List<Secretary> getAllSecretaries(){
         return secretaryService.getAllSecretary();
     }
 
     // View on by ID
-    @PutMapping("/{id}")
-    public SecretaryDTO getSecretary(@PathVariable ("id") long id){
-       return secretaryService.getSecretary(id);
+    @GetMapping("/{id}")
+    public ResponseEntity<Optional<Secretary>> getSecretary(@PathVariable Long id){
+        return secretaryService.getSecretary(id);
     }
 
-    /*
-    // Update Workplace
-
-     @PutMapping("/Workplace/{id}")
-        public Secretary updateSecretaryWorkplace(@PathVariable long id, @RequestParam String Workplace){
-         Secretary secretary = null;
-         if (secretaryRepository.existsById(id)){
-             secretary = secretaryRepository.getById(id);
-             secretary.setWorkplace(Workplace);
-             secretary= secretaryRepository.saveAndFlush(secretary);
-         }
-
-         return secretary;
-     }
- */
-    //Error
-    /*
-    //Delete one secretary by ID
-    @DeleteMapping("/{id}")
-    public SecretaryDTO deleteOneSecretaryById(@PathVariable long id, HttpServletResponse response){
-       return secretaryService.deleteSecretary(id);
+    //Update one by id
+    @PatchMapping("/update/{id}")
+    public ResponseEntity<Secretary> updateSecretary(@PathVariable long id, @RequestBody SecretaryDTO secretaryDTO){
+       return secretaryService.updateSecretary(id,secretaryDTO);
     }
-    */
 
     // Delete All
-    @DeleteMapping("/deleteAll")
-    public void deleteAllSecretary(){
+    @PatchMapping("/deleteAll")
+    public void deleteAllSecretaries(){
         secretaryService.deleteAllSecretary();
     }
+
+    //Delete a Secretary by id
+    @PatchMapping("/delete/{id}")
+    public ResponseEntity deleteOneSecretary(@PathVariable Long id){
+        return secretaryService.deleteSecretary(id);
+    }
+
 }
