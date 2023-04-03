@@ -36,19 +36,19 @@ public class PatientController {
     }
 
     //Update a patient
-    @PatchMapping("/update/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<Patient> updatePatient(@PathVariable Long id, @RequestBody PatientDTO patientDTO){
         return patientService.updatePatient(id, patientDTO);
     }
 
     //Delete a patient
-    @PatchMapping("/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity deletePatient(@PathVariable Long id){
         return patientService.deletePatient(id);
     }
 
     //Delete all patients
-    @PatchMapping("/deleteAll")
+    @DeleteMapping("/deleteAll")
     public void deleteAllPatients(){
         patientService.deleteAllPatients();
     }

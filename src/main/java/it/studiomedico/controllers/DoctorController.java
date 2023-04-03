@@ -36,18 +36,18 @@ public class DoctorController {
         return doctorService.getDoctor(id);
     }
     //Update One
-    @PatchMapping("/update/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<Doctor> updateDoctor(@PathVariable Long id, @RequestBody DoctorDTO doctorDTO){
         return doctorService.updateDoctor(id,doctorDTO);
     }
     // Delete a specific Doctor
-    @PatchMapping("/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity deleteSingle(@PathVariable Long id){
             return doctorService.deleteDoctor(id);
     }
 
     // Delete all
-    @PatchMapping("/deleteAll")
+    @DeleteMapping("/deleteAll")
     public void deleteAll(){
         doctorService.deleteAllDoctor();
     }

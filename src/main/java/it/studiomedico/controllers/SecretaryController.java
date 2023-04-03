@@ -37,19 +37,19 @@ public class SecretaryController {
     }
 
     //Update one by id
-    @PatchMapping("/update/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<Secretary> updateSecretary(@PathVariable long id, @RequestBody SecretaryDTO secretaryDTO){
        return secretaryService.updateSecretary(id,secretaryDTO);
     }
 
     // Delete All
-    @PatchMapping("/deleteAll")
+    @DeleteMapping("/deleteAll")
     public void deleteAllSecretaries(){
         secretaryService.deleteAllSecretary();
     }
 
     //Delete a Secretary by id
-    @PatchMapping("/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity deleteOneSecretary(@PathVariable Long id){
         return secretaryService.deleteSecretary(id);
     }

@@ -10,8 +10,8 @@ public class PrenotationDTO {
     private Long idPrenotation;
     private LocalDateTime date;
     private BookingENUM bookingStatus;
-    private PatientDTO patientDTO;
-    private DoctorDTO doctorDTO;
+    private Long patientId;
+    private Long doctorId;
     private String createdBy;
 
     private String modifiedBy;
@@ -21,11 +21,11 @@ public class PrenotationDTO {
     private LocalDate modifyOn;
     private RecordStatusENUM status;
 
-    public PrenotationDTO(LocalDateTime date, BookingENUM bookingStatus, PatientDTO patientDTO, DoctorDTO doctorDTO, String createdBy, String modifiedBy, LocalDate createdOn, LocalDate modifyOn,RecordStatusENUM status) {
+    public PrenotationDTO(LocalDateTime date, BookingENUM bookingStatus, Long patientId, Long doctorId, String createdBy, String modifiedBy, LocalDate createdOn, LocalDate modifyOn,RecordStatusENUM status) {
         this.date = date;
         this.bookingStatus = bookingStatus;
-        this.patientDTO = patientDTO;
-        this.doctorDTO = doctorDTO;
+        this.patientId = patientId;
+        this.doctorId = doctorId;
         this.createdBy = createdBy;
         this.modifiedBy = modifiedBy;
         this.createdOn = createdOn;
@@ -57,22 +57,6 @@ public class PrenotationDTO {
 
     public void setBookingStatus(BookingENUM bookingStatus) {
         this.bookingStatus = bookingStatus;
-    }
-
-    public PatientDTO getPatientDTO() {
-        return patientDTO;
-    }
-
-    public void setPatientDTO(PatientDTO patientDTO) {
-        this.patientDTO = patientDTO;
-    }
-
-    public DoctorDTO getDoctorDTO() {
-        return doctorDTO;
-    }
-
-    public void setDoctorDTO(DoctorDTO doctorDTO) {
-        this.doctorDTO = doctorDTO;
     }
 
     public String getCreatedBy() {
@@ -113,5 +97,21 @@ public class PrenotationDTO {
 
     public void setStatus(RecordStatusENUM status) {
         this.status = status;
+    }
+
+    public Long getPatientId() {
+        return patientId;
+    }
+
+    public void setPatientId(Long patientId) {
+        this.patientId = patientId;
+    }
+
+    public Long getDoctorId() {
+        return doctorId;
+    }
+
+    public void setDoctorId(Long doctorId) {
+        this.doctorId = doctorId;
     }
 }
