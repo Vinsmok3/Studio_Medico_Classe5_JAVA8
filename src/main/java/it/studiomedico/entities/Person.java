@@ -5,10 +5,12 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.MappedSuperclass;
 
+import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @MappedSuperclass
-public class Person {
+public class Person{
     @Column(name = "name")
     private String name;
     @Column(name = "surname")
@@ -24,10 +26,10 @@ public class Person {
     private String modifiedBy;
 
     @Column(name = "created_on")
-    private LocalDate createdOn;
+    private LocalDateTime createdOn;
 
     @Column(name = "modify_on")
-    private LocalDate modifyOn;
+    private LocalDateTime modifyOn;
 
     @Column(name = "status")
     @Enumerated
@@ -80,19 +82,19 @@ public class Person {
         this.modifiedBy = modifiedBy;
     }
 
-    public LocalDate getCreatedOn() {
+    public LocalDateTime getCreatedOn() {
         return createdOn;
     }
 
-    public void setCreatedOn(LocalDate createdOn) {
+    public void setCreatedOn(LocalDateTime createdOn) {
         this.createdOn = createdOn;
     }
 
-    public LocalDate getModifyOn() {
+    public LocalDateTime getModifyOn() {
         return modifyOn;
     }
 
-    public void setModifyOn(LocalDate modifyOn) {
+    public void setModifyOn(LocalDateTime modifyOn) {
         this.modifyOn = modifyOn;
     }
 

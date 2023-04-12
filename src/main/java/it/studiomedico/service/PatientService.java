@@ -4,12 +4,15 @@ package it.studiomedico.service;
 import it.studiomedico.dto.PatientDTO;
 import it.studiomedico.entities.Patient;
 import it.studiomedico.entities.recordEnum.RecordStatusENUM;
+import it.studiomedico.repositories.DoctorRepository;
 import it.studiomedico.repositories.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.Clock;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -20,8 +23,12 @@ public class PatientService {
     @Autowired
     private PatientRepository patientRepository;
 
+    @Autowired
+    private DoctorRepository doctorRepository;
+
     public ResponseEntity<Patient> createPatient(Patient patient){
         patient.setStatus(RecordStatusENUM.A);
+        patient.setCreatedOn(LocalDateTime.now(Clock.systemDefaultZone()));
         patientRepository.save(patient);
         return ResponseEntity.status(201).body(patient);
     }
@@ -50,6 +57,7 @@ public class PatientService {
             patient.setPhoneNumber(patientDTO.getPhoneNumber());
             patient.setFiscalCode(patientDTO.getFiscalCode());
             patient.setGender(patientDTO.getGender());
+            patient.setModifyOn(LocalDateTime.now(Clock.systemDefaultZone()));
             patientRepository.saveAndFlush(patient);
             return ResponseEntity.ok().body(patient);
         } else {
@@ -74,6 +82,16 @@ public class PatientService {
             patientRepository.saveAndFlush(patient);
         });
         return new ResponseEntity(HttpStatus.NO_CONTENT);
+    }
+
+    public ResponseEntity<Patient> assignDoctor(Long patientId, Long doctorId) {
+        if (patientRepository.existsById(patientId) && doctorRepository.existsById(doctorId)) {
+            Patient patient = patientRepository.findById(patientId).get();
+            patient.setDoctor(doctorRepository.findById(doctorId).get());
+            Patient updatedPatient = patientRepository.saveAndFlush(patient);
+            return ResponseEntity.ok(updatedPatient);
+        }
+        return new ResponseEntity("no patient found with id:" + patientId, HttpStatus.NOT_FOUND);
     }
 
 

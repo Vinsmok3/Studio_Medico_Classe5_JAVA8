@@ -53,6 +53,11 @@ public class PatientController {
         patientService.deleteAllPatients();
     }
 
+    //Assign a Doctor
+    @PatchMapping("/doctor")
+    public ResponseEntity<Patient> assignDoctor(@RequestParam Long idPatient, @RequestParam Long idDoctor) {
+        return patientService.assignDoctor(idPatient, idDoctor);
+    }
 
 
 

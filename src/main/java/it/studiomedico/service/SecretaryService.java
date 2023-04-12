@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.Clock;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -20,6 +22,7 @@ public class SecretaryService {
 
     public ResponseEntity <Secretary> createSecretary(Secretary secretary){
         secretary.setStatus(RecordStatusENUM.A);
+        secretary.setCreatedOn(LocalDateTime.now(Clock.systemDefaultZone()));
         secretaryRepository.save(secretary);
         return ResponseEntity.status(201).body(secretary);
     }
@@ -57,6 +60,7 @@ public class SecretaryService {
             secretary.setSurname(secretaryDTO.getSurname());
             secretary.setEmail(secretaryDTO.getEmail());
             secretary.setWorkplace(secretaryDTO.getWorkplace());
+            secretary.setModifyOn(LocalDateTime.now(Clock.systemDefaultZone()));
 
             secretaryRepository.saveAndFlush(secretary);
             return ResponseEntity.ok().body(secretary);

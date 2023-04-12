@@ -29,10 +29,10 @@ public class Prenotation {
     private String modifiedBy;
 
     @Column(name = "created_on")
-    private LocalDate createdOn;
+    private LocalDateTime createdOn;
 
     @Column(name = "modify_on")
-    private LocalDate modifyOn;
+    private LocalDateTime modifyOn;
 
     @Column(name = "status")
     @Enumerated
@@ -51,7 +51,7 @@ public class Prenotation {
     private Doctor doctor;
 
 
-    public Prenotation(LocalDateTime date, BookingENUM statusBooking, String createdBy, String modifiedBy, LocalDate createdOn, LocalDate modifyOn, RecordStatusENUM status, Patient patient, Doctor doctor) {
+    public Prenotation(LocalDateTime date, BookingENUM statusBooking, String createdBy, String modifiedBy, LocalDateTime createdOn, LocalDateTime modifyOn, RecordStatusENUM status, Patient patient, Doctor doctor) {
         this.date = date;
         this.statusBooking = statusBooking;
         this.createdBy = createdBy;
@@ -104,19 +104,19 @@ public class Prenotation {
         this.modifiedBy = modifiedBy;
     }
 
-    public LocalDate getCreatedOn() {
+    public LocalDateTime getCreatedOn() {
         return createdOn;
     }
 
-    public void setCreatedOn(LocalDate createdOn) {
+    public void setCreatedOn(LocalDateTime createdOn) {
         this.createdOn = createdOn;
     }
 
-    public LocalDate getModifyOn() {
+    public LocalDateTime getModifyOn() {
         return modifyOn;
     }
 
-    public void setModifyOn(LocalDate modifyOn) {
+    public void setModifyOn(LocalDateTime modifyOn) {
         this.modifyOn = modifyOn;
     }
 

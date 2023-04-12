@@ -53,7 +53,7 @@ public class DoctorController {
     }
 
     //Assign a Secretary
-    @PatchMapping
+    @PatchMapping("/secretary")
     public ResponseEntity<Doctor> assignSecretary(@RequestParam Long idDoctor, @RequestParam Long idSecretary) {
         return doctorService.secretaryDoc(idDoctor, idSecretary);
     }

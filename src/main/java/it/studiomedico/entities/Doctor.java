@@ -4,12 +4,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import it.studiomedico.entities.recordEnum.RecordStatusENUM;
 import jakarta.persistence.*;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
 @Entity
 @Table(name = "doctor")
-public class Doctor extends Person {
+public class Doctor extends Person{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,11 +28,9 @@ public class Doctor extends Person {
     private Secretary secretary;
 
     @OneToMany(mappedBy = "doctor")
-    @JsonIgnore
     private List<Prenotation> prenotationList;
 
     @OneToMany(mappedBy = "doctor")
-    @JsonIgnore
     private List<Patient> patientList;
 
 

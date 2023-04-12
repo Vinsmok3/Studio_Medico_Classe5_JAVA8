@@ -9,6 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import java.time.Clock;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -33,6 +37,7 @@ public class DoctorService {
      */
    public ResponseEntity<Doctor> createDoctor(Doctor doctor){
        doctor.setStatus(RecordStatusENUM.A);
+       doctor.setCreatedOn(LocalDateTime.now(Clock.systemDefaultZone()));
        doctorRepository.save(doctor);
        return ResponseEntity.status(201).body(doctor);
    }
@@ -98,6 +103,7 @@ public class DoctorService {
                doctor.setEmail(doctorDTO.getEmail());
                doctor.setWorkplace(doctorDTO.getWorkplace());
                doctor.setSpecialization(doctorDTO.getSpecialization());
+               doctor.setModifyOn(LocalDateTime.now(Clock.systemDefaultZone()));
 
                doctorRepository.saveAndFlush(doctor);
                return ResponseEntity.ok().body(doctor);

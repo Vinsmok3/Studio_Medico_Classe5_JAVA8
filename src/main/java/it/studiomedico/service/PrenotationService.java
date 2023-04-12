@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.Clock;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +44,7 @@ public class PrenotationService {
             return new ResponseEntity("there is already a prenotation within 30 minutes", HttpStatus.CONFLICT);
         }
         prenotation.setStatus(RecordStatusENUM.A);
+        prenotation.setCreatedOn(LocalDateTime.now(Clock.systemDefaultZone()));
         return ResponseEntity.ok(prenotationRepository.save(prenotation));
     }
 
@@ -62,6 +65,7 @@ public class PrenotationService {
             if (prenotationDto.getPatientId() != null) {
                 prenotation.setPatient(patientRepository.getReferenceById(prenotationDto.getPatientId()));
             }
+            prenotation.setModifyOn(LocalDateTime.now(Clock.systemDefaultZone()));
             Prenotation updatedPrenotation = prenotationRepository.saveAndFlush(prenotation);
             return ResponseEntity.ok(updatedPrenotation);
         }
