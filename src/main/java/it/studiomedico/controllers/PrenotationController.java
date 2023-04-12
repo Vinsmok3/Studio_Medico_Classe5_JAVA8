@@ -15,16 +15,15 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
-@RequestMapping("/Prenotation")
+@RequestMapping("/prenotation")
 public class PrenotationController {
 
     @Autowired
-    private PrenotationRepository prenotationRepository;
     private PrenotationService prenotationService;
     //Create
     @PostMapping("/create")
-    public ResponseEntity<Prenotation> create(@RequestBody Prenotation prenotation, @RequestParam Long doctorId, @RequestParam Long patientId){
-        return prenotationService.createPrenotation(prenotation, doctorId, patientId);
+    public ResponseEntity<Prenotation> create(@RequestBody Prenotation prenotation, @RequestParam Long idDoctor, @RequestParam Long idPatient){
+        return prenotationService.createPrenotation(prenotation, idDoctor, idPatient);
     }
 
     // Read All

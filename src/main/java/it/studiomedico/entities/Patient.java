@@ -1,11 +1,10 @@
 package it.studiomedico.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import it.studiomedico.entities.recordEnum.GenderENUM;
-import it.studiomedico.entities.recordEnum.RecordStatusENUM;
 import jakarta.persistence.*;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -30,102 +29,23 @@ public class Patient extends Person {
 
     @ManyToOne
     @JoinColumn(name = "id_doctor")
+    @JsonIgnore
     private Doctor doctor;
     @OneToMany(mappedBy = "patient")
+    @JsonIgnore
     private List<Prenotation> prenotationList;
 
 
     public Patient(String name, String surname, String email, String phoneNumber, String fiscalCode, GenderENUM gender) {
         super(name, surname, email);
-        this.phoneNumber=phoneNumber;
-        this.fiscalCode=fiscalCode;
-        this.gender=gender;
+        this.phoneNumber = phoneNumber;
+        this.fiscalCode = fiscalCode;
+        this.gender = gender;
     }
 
     public Patient() {
         super();
     }
-
-    @Override
-    public String getName() {
-        return super.getName();
-    }
-
-    @Override
-    public void setName(String name) {
-        super.setName(name);
-    }
-
-    @Override
-    public String getSurname() {
-        return super.getSurname();
-    }
-
-    @Override
-    public void setSurname(String surname) {
-        super.setSurname(surname);
-    }
-
-    @Override
-    public String getEmail() {
-        return super.getEmail();
-    }
-
-    @Override
-    public void setEmail(String email) {
-        super.setEmail(email);
-    }
-
-    @Override
-    public String getCreatedBy() {
-        return super.getCreatedBy();
-    }
-
-    @Override
-    public void setCreatedBy(String createdBy) {
-        super.setCreatedBy(createdBy);
-    }
-
-    @Override
-    public String getModifiedBy() {
-        return super.getModifiedBy();
-    }
-
-    @Override
-    public void setModifiedBy(String modifiedBy) {
-        super.setModifiedBy(modifiedBy);
-    }
-
-    @Override
-    public LocalDate getCreatedOn() {
-        return super.getCreatedOn();
-    }
-
-    @Override
-    public void setCreatedOn(LocalDate createdOn) {
-        super.setCreatedOn(createdOn);
-    }
-
-    @Override
-    public LocalDate getModifyOn() {
-        return super.getModifyOn();
-    }
-
-    @Override
-    public void setModifyOn(LocalDate modifyOn) {
-        super.setModifyOn(modifyOn);
-    }
-
-    @Override
-    public RecordStatusENUM getStatus() {
-        return super.getStatus();
-    }
-
-    @Override
-    public void setStatus(RecordStatusENUM status) {
-        super.setStatus(status);
-    }
-
     public Long getIdPatient() {
         return idPatient;
     }

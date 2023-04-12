@@ -1,7 +1,6 @@
 package it.studiomedico.service;
 
 import it.studiomedico.dto.PrenotationDTO;
-import it.studiomedico.entities.Doctor;
 import it.studiomedico.entities.Prenotation;
 import it.studiomedico.entities.recordEnum.RecordStatusENUM;
 import it.studiomedico.repositories.DoctorRepository;
@@ -11,9 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,20 +24,28 @@ public class PrenotationService {
     @Autowired
     PatientRepository patientRepository;
 
-    public ResponseEntity<Prenotation> createPrenotation(Prenotation prenotation, long doctorId, long patientId) {
-        if (doctorRepository.existsById(doctorId)) {
-            prenotation.setDoctor(doctorRepository.getReferenceById(doctorId));
+    public ResponseEntity<Prenotation> createPrenotation(Prenotation prenotation, Long idDoctor, Long idPatient) {
+        if (doctorRepository.existsById(idDoctor)) {
+            prenotation.setDoctor(doctorRepository.getReferenceById(idDoctor));
         } else {
             return new ResponseEntity("doctor not found", HttpStatus.NOT_FOUND);
         }
-        if (patientRepository.existsById(patientId)) {
-            prenotation.setPatient(patientRepository.getReferenceById(patientId));
+        if (patientRepository.existsById(idPatient)) {
+            prenotation.setPatient(patientRepository.getReferenceById(idPatient));
         } else {
             return new ResponseEntity("patient not found", HttpStatus.NOT_FOUND);
+        }
+        LocalDateTime startTime = prenotation.getDate();
+        LocalDateTime endTime = startTime.plusMinutes(30);
+        List<Prenotation> prenotations = prenotationRepository.findByDoctor_IdDoctorAndDateBetween(idDoctor, startTime, endTime);
+        if (!prenotations.isEmpty()) {
+            return new ResponseEntity("there is already a prenotation within 30 minutes", HttpStatus.CONFLICT);
         }
         prenotation.setStatus(RecordStatusENUM.A);
         return ResponseEntity.ok(prenotationRepository.save(prenotation));
     }
+
+
 
     public ResponseEntity<Prenotation> updatePrenotation(long id, PrenotationDTO prenotationDto) {
         if (prenotationRepository.existsById(id)) {

@@ -1,5 +1,6 @@
 package it.studiomedico.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import it.studiomedico.entities.recordEnum.BookingENUM;
 import it.studiomedico.entities.recordEnum.RecordStatusENUM;
 import jakarta.persistence.*;
@@ -40,12 +41,15 @@ public class Prenotation {
 
     @ManyToOne
     @JoinColumn(name = "ext_id_patient", nullable = false)
+    @JsonIgnore
     private Patient patient;
 
 
     @ManyToOne
     @JoinColumn(name = "ext_id_doctor", nullable = false)
+    @JsonIgnore
     private Doctor doctor;
+
 
     public Prenotation(LocalDateTime date, BookingENUM statusBooking, String createdBy, String modifiedBy, LocalDate createdOn, LocalDate modifyOn, RecordStatusENUM status, Patient patient, Doctor doctor) {
         this.date = date;
