@@ -2,6 +2,8 @@ package it.studiomedico.service;
 
 import it.studiomedico.dto.DoctorDTO;
 import it.studiomedico.entities.Doctor;
+import it.studiomedico.entities.Patient;
+import it.studiomedico.entities.Prenotation;
 import it.studiomedico.entities.recordEnum.RecordStatusENUM;
 import it.studiomedico.repositories.DoctorRepository;
 import it.studiomedico.repositories.SecretaryRepository;
@@ -49,7 +51,11 @@ public class DoctorService {
      */
    public List<Doctor> getAllDoctors(){
        List<Doctor> alldocs = new ArrayList<>();
-       alldocs.addAll(doctorRepository.findAll());
+       doctorRepository.findAll().forEach(doctor -> {
+           if (doctor.getStatus() == RecordStatusENUM.A) {
+               alldocs.add(doctor);
+           }
+       });
        return alldocs;
    }
     /**
@@ -142,6 +148,41 @@ public class DoctorService {
         return new ResponseEntity("no doctor found with id " + idDoctor, HttpStatus.NOT_FOUND);
     }
 
-    // Fare listaPazienti & listaPrenotazioni
+    /**
+     * Return all doctor's prenotation by id
+     *
+     * @param id
+     * @return prenotationListById;
+     */
+    public List<Prenotation> getAllDoctorPrenotation(Long id) throws Exception {
+        if (doctorRepository.existsById(id)) {
+            List<Prenotation> doctorActivePrenotation = new ArrayList<>();
+            doctorRepository.findById(id).get().getPrenotationList().forEach(prenotation -> {
+                if (prenotation.getStatus() == RecordStatusENUM.A) {
+                    doctorActivePrenotation.add(prenotation);
+                }
+            });
+            return doctorActivePrenotation;
+        } else throw new Exception("this doctor does not exist");
+    }
+
+    /**
+     * Return doctor's patient by id
+     *
+     * @param doctorId
+     * @return patientListById
+     */
+
+    public List<Patient> getDoctorPatientList(Long doctorId) throws Exception {
+        if (doctorRepository.existsById(doctorId)) {
+            List<Patient> activePatientList = new ArrayList<>();
+            doctorRepository.findById(doctorId).get().getPatientList().forEach(patient -> {
+                if (patient.getStatus() == RecordStatusENUM.A) {
+                    activePatientList.add(patient);
+                }
+            });
+            return activePatientList;
+        } else throw new Exception("this doctor does not exist");
+    }
 
 }

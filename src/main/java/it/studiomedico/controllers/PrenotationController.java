@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/prenotation")
@@ -44,28 +45,15 @@ public class PrenotationController {
         prenotationService.deleteAllPrenotations();
     }
 
-    // Delete a specific Prenotation WIP
-    /*
-    @DeleteMapping("/{id}")
-    public void deleteSingle(@PathVariable long id, HttpServletResponse response){
-        if (prenotationRepository.existsById(id))
-            prenotationRepository.deleteById(id);
-        else
-            response.setStatus(409);
-    }
-
-     */
-
-    // Read One WIP
-    /*
+    // Read One
     @GetMapping("/{id}")
-    public Prenotation getPrenotations(@PathVariable long id){
-        return prenotationRepository.existsById(id)
-                ? prenotationRepository.getById(id)
-                : new Prenotation();
+    public ResponseEntity<Optional<Prenotation>> getPrenotationById(@PathVariable Long id) {
+        return prenotationService.getPrenotationById(id);
     }
 
-     */
-
-
+    // Delete One
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity deletePrenotationById(@PathVariable long id) {
+        return prenotationService.deletePrenotationById(id);
+    }
 }

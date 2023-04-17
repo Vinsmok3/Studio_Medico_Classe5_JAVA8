@@ -26,6 +26,12 @@ public class PatientService {
     @Autowired
     private DoctorRepository doctorRepository;
 
+    /**
+     *
+    * Method for creating a new patient.
+    * @param patient the patient to create
+    * @return an instance of ResponseEntity that encapsulates the created patient and HTTP status 201
+    */
     public ResponseEntity<Patient> createPatient(Patient patient){
         patient.setStatus(RecordStatusENUM.A);
         patient.setCreatedOn(LocalDateTime.now(Clock.systemDefaultZone()));
@@ -33,6 +39,12 @@ public class PatientService {
         return ResponseEntity.status(201).body(patient);
     }
 
+    /**
+     * Method for retrieving a specific patient by their ID.
+     *
+     * @param id the ID of the patient to retrieve
+     * @return an instance of ResponseEntity that encapsulates the retrieved patient and HTTP status 200 if the patient exists, otherwise a response with HTTP status 404
+     */
     public ResponseEntity<Optional<Patient>> getPatient (Long id) {
         if (patientRepository.existsById(id)) {
             Optional<Patient> patient = patientRepository.findById(id);
@@ -41,12 +53,29 @@ public class PatientService {
         return new ResponseEntity("no patient exists whith id: " + id, HttpStatus.NOT_FOUND);
     }
 
+    /**
+     * Method for retrieving all existing patients.
+     *
+     * @return a list of active patients
+     */
     public List<Patient> getAllPatients(){
         List<Patient> allPatients = new ArrayList<>();
-        allPatients.addAll(patientRepository.findAll());
+        patientRepository.findAll().forEach(patient -> {
+            if (patient.getStatus() == RecordStatusENUM.A) {
+                allPatients.add(patient);
+            }
+        });
         return allPatients;
     }
 
+    /**
+     *
+     * Method for updating the information of an existing patient.
+     *
+     * @param id the ID of the patient to update
+     * @param patientDTO the new information of the patient
+     * @return an instance of ResponseEntity that encapsulates the updated patient and HTTP status 200 if the patient exists, otherwise a response with HTTP status 404
+     */
     public ResponseEntity<Patient> updatePatient(Long id, PatientDTO patientDTO) {
         Optional<Patient> patientUpdate = patientRepository.findById(id);
         if (patientUpdate.isPresent()) {
@@ -65,6 +94,14 @@ public class PatientService {
         }
     }
 
+
+    /**
+     *
+     * Method for deleting an existing patient.
+     *
+     * @param id the ID of the patient to delete
+     * @return an instance of ResponseEntity with a confirmation message and HTTP status 204 if the patient was successfully deleted, otherwise a response with HTTP status 404
+     */
     public ResponseEntity deletePatient (Long id) {
         if (patientRepository.existsById(id)) {
             Patient patient = patientRepository.findById(id).get();
@@ -76,6 +113,11 @@ public class PatientService {
         }
     }
 
+    /**
+     * Method for deleting all patients.
+     *
+     * @return an instance of ResponseEntity with HTTP status 204
+     */
     public ResponseEntity deleteAllPatients() {
         patientRepository.findAll().forEach(patient -> {
             patient.setStatus(RecordStatusENUM.D);
@@ -84,6 +126,14 @@ public class PatientService {
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
+    /**
+     *
+     * Method for assigning a doctor to a patient.
+     *
+     * @param patientId the ID of the patient to assign the doctor to
+     * @param doctorId the ID of the doctor to assign
+     * @return an instance of ResponseEntity that encapsulates the updated patient and HTTP status 200 if the patient and doctor exist, otherwise a response with HTTP status 404
+     */
     public ResponseEntity<Patient> assignDoctor(Long patientId, Long doctorId) {
         if (patientRepository.existsById(patientId) && doctorRepository.existsById(doctorId)) {
             Patient patient = patientRepository.findById(patientId).get();

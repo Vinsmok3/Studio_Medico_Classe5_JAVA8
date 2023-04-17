@@ -2,6 +2,8 @@ package it.studiomedico.controllers;
 
 import it.studiomedico.dto.DoctorDTO;
 import it.studiomedico.entities.Doctor;
+import it.studiomedico.entities.Patient;
+import it.studiomedico.entities.Prenotation;
 import it.studiomedico.service.DoctorService;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +37,7 @@ public class DoctorController {
     public ResponseEntity<Optional<Doctor>> getDoctor(@PathVariable Long id){
         return doctorService.getDoctor(id);
     }
+
     //Update One
     @PutMapping("/update/{id}")
     public ResponseEntity<Doctor> updateDoctor(@PathVariable Long id, @RequestBody DoctorDTO doctorDTO){
@@ -56,6 +59,18 @@ public class DoctorController {
     @PatchMapping("/secretary")
     public ResponseEntity<Doctor> assignSecretary(@RequestParam Long idDoctor, @RequestParam Long idSecretary) {
         return doctorService.secretaryDoc(idDoctor, idSecretary);
+    }
+
+    //Get a list of all patients
+    @GetMapping("/list/patient/{idDoctor}")
+    public List<Patient> getDoctorPatients(@PathVariable Long idDoctor) throws Exception {
+        return doctorService.getDoctorPatientList(idDoctor);
+    }
+
+    //Get a list of all prenotations
+    @GetMapping("/list/prenotation/{idDoctor}")
+    public List<Prenotation> getPrenotation(@PathVariable Long idDoctor) throws Exception {
+        return doctorService.getAllDoctorPrenotation(idDoctor);
     }
 
 

@@ -35,7 +35,7 @@ public class Prenotation {
     private LocalDateTime modifyOn;
 
     @Column(name = "status")
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private RecordStatusENUM status;
 
 
