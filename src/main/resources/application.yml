@@ -21,6 +21,6 @@ spring:
             enable: true
 authframework:
   jwt:
-    hskey: KTlgvPcXbnLoYl6b5Ma1oG294dGoZ+fyxBqJiBjQjVo=
+    hskey: ada23i4r102dj1q203rj102end012djm02je
     audience: testaudience
     token-ttl: 86400000
