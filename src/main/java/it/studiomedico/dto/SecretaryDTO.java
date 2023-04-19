@@ -8,13 +8,12 @@ public class SecretaryDTO extends UserDTO {
     private Long idSecretary;
     private String workplace;
 
-    public SecretaryDTO(String name, String surname, String email, String createdBy, String modifiedBy, LocalDate createdOn, LocalDate modifyOn, RecordStatusENUM status, String workplace) {
-        super(name, surname, email, createdBy, modifiedBy, createdOn, modifyOn,status);
-        this.workplace=workplace;
+    public SecretaryDTO() {
     }
 
-    public SecretaryDTO() {
-        super();
+    public SecretaryDTO(String name, String surname, String email, String createdBy, String modifiedBy, LocalDate createdOn, LocalDate modifyOn, RecordStatusENUM status, String phoneNumber, String workplace) {
+        super(name, surname, email, createdBy, modifiedBy, createdOn, modifyOn, status, phoneNumber);
+        this.workplace = workplace;
     }
 
     public Long getIdSecretary() {

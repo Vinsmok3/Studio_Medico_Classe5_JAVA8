@@ -33,15 +33,7 @@ public class Doctor extends Person{
     @OneToMany(mappedBy = "doctor")
     private List<Patient> patientList;
 
-
-    public Doctor(String name, String surname, String email, String workplace, String specialization) {
-        super(name, surname, email);
-        this.workplace=workplace;
-        this.specialization=specialization;
-    }
-
     public Doctor() {
-        super();
     }
 
     public Long getIdDoctor() {

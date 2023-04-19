@@ -1,9 +1,14 @@
 package it.studiomedico.service;
 
-import it.studiomedico.dto.SecretaryDTO;
+import it.pasqualecavallo.studentsmaterial.authorization_framework.utils.BCryptPasswordEncoder;
+import it.studiomedico.dto.*;
 import it.studiomedico.entities.Secretary;
 import it.studiomedico.entities.recordEnum.RecordStatusENUM;
+import it.studiomedico.exception.InvalidActivationCodeException;
+import it.studiomedico.exception.UserNotFoundException;
 import it.studiomedico.repositories.SecretaryRepository;
+import it.studiomedico.utilities.EmailSender;
+import it.studiomedico.utilities.StringUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +24,12 @@ import java.util.Optional;
 public class SecretaryService {
     @Autowired
     private SecretaryRepository secretaryRepository;
+
+    @Autowired
+    private EmailSender emailSender;
+
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     /**
      * Creates a new secretary record with status set to active and saves it to the database.
@@ -115,5 +126,42 @@ public class SecretaryService {
         });
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
+
+    public ActivateResponseDTO activate(ActivateRequestDTO request) {
+        Optional<Secretary> oSecretary = secretaryRepository.findByEmail(request.getEmail());
+        Secretary secretary = oSecretary.orElseThrow(UserNotFoundException::new);
+        if(request.getActivationCode().equals(secretary.getActivationCode())) {
+            secretary.setActivationCode("null");
+            secretary.setStatus(RecordStatusENUM.A);
+            secretaryRepository.save(secretary);
+            ActivateResponseDTO response = new ActivateResponseDTO();
+            response.setStatus(BaseResponse.Status.OK);
+            response.setFirstName(secretary.getName());
+            return response;
+        } else {
+            throw new InvalidActivationCodeException();
+        }
+    }
+
+    private Secretary secretaryRequestToEntityRegistration(RegistrationRequestDTO request){
+        Secretary secretary = new Secretary();
+        secretary.setEmail(request.getEmail());
+        secretary.setPassword(bCryptPasswordEncoder.encode(request.getPassword()));
+        System.out.println(bCryptPasswordEncoder.encode(request.getPassword()));
+        secretary.setName(request.getName());
+        secretary.setSurname(request.getSurname());
+        secretary.setPhoneNumber(request.getPhoneNumber());
+        secretary.setStatus(RecordStatusENUM.W);
+        secretary.setActivationCode(StringUtility.generateRandomString(6));
+        return secretary;
+    }
+
+    private RegistrationResponseDTO secretaryEntityToResponseRegistration(){
+        RegistrationResponseDTO response = new RegistrationResponseDTO();
+        response.setStatus(BaseResponse.Status.OK);
+        return response;
+    }
+
+
 
 }

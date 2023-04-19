@@ -24,13 +24,7 @@ public class Secretary extends Person {
     private List<Doctor> doctorList;
 
 
-    public Secretary(String name, String surname, String email, String workplace) {
-        super(name, surname, email);
-        this.workplace=workplace;
-    }
-
     public Secretary() {
-        super();
     }
 
     public Long getIdSecretary() {

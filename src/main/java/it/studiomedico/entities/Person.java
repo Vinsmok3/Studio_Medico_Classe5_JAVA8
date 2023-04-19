@@ -20,6 +20,9 @@ public class Person{
     @Column(name = "email", unique = true)
     private String email;
 
+    @Column(name = "password", unique = true)
+    private String password;
+
     @Column(name = "created_by")
     private String createdBy;
 
@@ -36,11 +39,11 @@ public class Person{
     @Enumerated(EnumType.STRING)
     private RecordStatusENUM status;
 
-    public Person(String name, String surname, String email) {
-        this.name = name;
-        this.surname = surname;
-        this.email = email;
-    }
+    @Column(name = "phoneNumber", nullable = false)
+    private String phoneNumber;
+
+    @Column(name = "activation_code")
+    private String activationCode;
     public Person(){}
 
     public String getName() {
@@ -105,5 +108,29 @@ public class Person{
 
     public void setStatus(RecordStatusENUM status) {
         this.status = status;
+    }
+
+    public String getActivationCode() {
+        return activationCode;
+    }
+
+    public void setActivationCode(String activationCode) {
+        this.activationCode = activationCode;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 }

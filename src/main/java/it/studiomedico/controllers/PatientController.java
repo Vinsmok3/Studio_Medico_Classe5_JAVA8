@@ -1,6 +1,9 @@
 package it.studiomedico.controllers;
 
-import it.studiomedico.dto.PatientDTO;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import it.pasqualecavallo.studentsmaterial.authorization_framework.security.PublicEndpoint;
+import it.studiomedico.dto.*;
 import it.studiomedico.entities.Patient;
 import it.studiomedico.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +15,8 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/patient")
+@SecurityRequirement(name = "bearerAuth")
+@Tag(name = "User")
 public class PatientController {
 
     @Autowired
@@ -59,6 +64,17 @@ public class PatientController {
         return patientService.assignDoctor(idPatient, idDoctor);
     }
 
+    @PostMapping("/register")
+    @PublicEndpoint
+    public RegistrationResponseDTO register (@RequestBody RegistrationRequestDTO request) {
+        return patientService.register(request);
+    }
+
+    @PostMapping("/activate")
+    @PublicEndpoint
+    public ActivateResponseDTO activate (@RequestBody ActivateRequestDTO request) {
+        return patientService.activate(request);
+    }
 
 
 }

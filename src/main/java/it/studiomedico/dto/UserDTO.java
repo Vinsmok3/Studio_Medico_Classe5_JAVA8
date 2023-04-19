@@ -21,10 +21,12 @@ public class UserDTO {
 
     private RecordStatusENUM status;
 
+    private String phoneNumber;
+
     public UserDTO() {
     }
 
-    public UserDTO(String name, String surname, String email, String createdBy, String modifiedBy, LocalDate createdOn, LocalDate modifyOn, RecordStatusENUM status) {
+    public UserDTO(String name, String surname, String email, String createdBy, String modifiedBy, LocalDate createdOn, LocalDate modifyOn, RecordStatusENUM status, String phoneNumber) {
         this.name = name;
         this.surname = surname;
         this.email = email;
@@ -33,6 +35,7 @@ public class UserDTO {
         this.createdOn = createdOn;
         this.modifyOn = modifyOn;
         this.status = status;
+        this.phoneNumber = phoneNumber;
     }
 
     public RecordStatusENUM getStatus() {
@@ -97,5 +100,13 @@ public class UserDTO {
 
     public void setModifyOn(LocalDate modifyOn) {
         this.modifyOn = modifyOn;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 }

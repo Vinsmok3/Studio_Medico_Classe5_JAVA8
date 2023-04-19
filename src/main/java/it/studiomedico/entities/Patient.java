@@ -16,9 +16,6 @@ public class Patient extends Person {
     @Column(name = "id_patient")
     private Long idPatient;
 
-    @Column(name = "phoneNumber", nullable = false)
-    private String phoneNumber;
-
     @Column(name = "fiscal_code", nullable = false)
     private String fiscalCode;
 
@@ -36,16 +33,8 @@ public class Patient extends Person {
     private List<Prenotation> prenotationList;
 
 
-    public Patient(String name, String surname, String email, String phoneNumber, String fiscalCode, GenderENUM gender) {
-        super(name, surname, email);
-        this.phoneNumber = phoneNumber;
-        this.fiscalCode = fiscalCode;
-        this.gender = gender;
-    }
+    public Patient() {}
 
-    public Patient() {
-        super();
-    }
     public Long getIdPatient() {
         return idPatient;
     }
@@ -53,15 +42,6 @@ public class Patient extends Person {
     public void setIdPatient(Long idPatient) {
         this.idPatient = idPatient;
     }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
     public String getFiscalCode() {
         return fiscalCode;
     }

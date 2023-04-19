@@ -10,15 +10,13 @@ public class DoctorDTO extends UserDTO{
     private String specialization;
 
 
-    public DoctorDTO(String name, String surname, String email, String createdBy, String modifiedBy, LocalDate createdOn, LocalDate modifyOn, RecordStatusENUM status,String workplace, String specialization) {
-        super(name, surname, email, createdBy, modifiedBy, createdOn, modifyOn, status);
-        this.workplace=workplace;
-        this.specialization=specialization;
-
+    public DoctorDTO() {
     }
 
-    public DoctorDTO() {
-        super();
+    public DoctorDTO(String name, String surname, String email, String createdBy, String modifiedBy, LocalDate createdOn, LocalDate modifyOn, RecordStatusENUM status, String phoneNumber, String workplace, String specialization) {
+        super(name, surname, email, createdBy, modifiedBy, createdOn, modifyOn, status, phoneNumber);
+        this.workplace = workplace;
+        this.specialization = specialization;
     }
 
     public Long getIdDoctor() {

@@ -1,11 +1,16 @@
 package it.studiomedico.service;
 
 
-import it.studiomedico.dto.PatientDTO;
+import it.pasqualecavallo.studentsmaterial.authorization_framework.utils.BCryptPasswordEncoder;
+import it.studiomedico.dto.*;
 import it.studiomedico.entities.Patient;
 import it.studiomedico.entities.recordEnum.RecordStatusENUM;
+import it.studiomedico.exception.InvalidActivationCodeException;
+import it.studiomedico.exception.UserNotFoundException;
 import it.studiomedico.repositories.DoctorRepository;
 import it.studiomedico.repositories.PatientRepository;
+import it.studiomedico.utilities.EmailSender;
+import it.studiomedico.utilities.StringUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+
 @Service
 public class PatientService {
 
@@ -25,6 +31,12 @@ public class PatientService {
 
     @Autowired
     private DoctorRepository doctorRepository;
+
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    @Autowired
+    private EmailSender emailSender;
 
     /**
      *
@@ -144,5 +156,48 @@ public class PatientService {
         return new ResponseEntity("no patient found with id:" + patientId, HttpStatus.NOT_FOUND);
     }
 
+    public RegistrationResponseDTO register(RegistrationRequestDTO request) {
+        Patient patient = patientRequestToEntityRegistration(request);
+        patientRepository.save(patient);
+        emailSender.sendRegistrationEmail(patient);
+        return patientEntityToResponseRegistration();
+    }
+
+    public ActivateResponseDTO activate(ActivateRequestDTO request) {
+        Optional<Patient> oPatient = patientRepository.findByEmail(request.getEmail());
+        Patient patient = oPatient.orElseThrow(UserNotFoundException::new);
+        if(request.getActivationCode().equals(patient.getActivationCode())) {
+            patient.setStatus(RecordStatusENUM.A);
+            patient.setActivationCode("null");
+            patientRepository.save(patient);
+            ActivateResponseDTO response = new ActivateResponseDTO();
+            response.setStatus(BaseResponse.Status.OK);
+            response.setFirstName(patient.getName());
+            return response;
+        } else {
+            throw new InvalidActivationCodeException();
+        }
+    }
+
+    private Patient patientRequestToEntityRegistration(RegistrationRequestDTO request){
+        Patient patient = new Patient();
+        patient.setEmail(request.getEmail());
+        patient.setPassword(bCryptPasswordEncoder.encode(request.getPassword()));
+        System.out.println(bCryptPasswordEncoder.encode(request.getPassword()));
+        patient.setName(request.getName());
+        patient.setSurname(request.getSurname());
+        patient.setPhoneNumber(request.getPhoneNumber());
+        patient.setStatus(RecordStatusENUM.W);
+        patient.setActivationCode(StringUtility.generateRandomString(6));
+        return patient;
+    }
+
+    private RegistrationResponseDTO patientEntityToResponseRegistration(){
+        RegistrationResponseDTO response = new RegistrationResponseDTO();
+        response.setStatus(BaseResponse.Status.OK);
+        return response;
+    }
+
 
 }
+
